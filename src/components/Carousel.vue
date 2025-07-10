@@ -69,7 +69,7 @@ export default {
 <style scoped>
 .carousel-outer {
   width: 100%;
-  max-width: 1100px;
+  max-width: 1400px;
   margin: 0 auto;
   background: #eee;
   border-radius: 18px;
