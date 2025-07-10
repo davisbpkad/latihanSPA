@@ -5,7 +5,6 @@ import ProductView from '../views/ProductView.vue'
 import ContactView from '../views/ContactView.vue'
 import GalleryView from '../views/GalleryView.vue'
 
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -33,6 +32,11 @@ const router = createRouter({
       path: '/contact',
       name: 'contact',
       component: ContactView,
+    },
+    {
+      path: '/products/:index',
+      name: 'ProductDetail',
+      component: () => import('../views/ProductDetail.vue')
     }
   ],
 })

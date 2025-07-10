@@ -1,5 +1,5 @@
 <template>
-    <div class="container mt-5">
+    <div class="container mt-4">
             <div class="col-md-8 mx-auto">
                  <h1 class="title-4 mb-4">Contact</h1>
                   <div class="mb-4">

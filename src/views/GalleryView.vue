@@ -1,5 +1,5 @@
 <template>
-<div class="container mt-5 mb-5">
+<div class="container mt-4 pb-5">
   <!-- Loading State -->
   <div v-if="loading" class="text-center">
     <div class="spinner-border" role="status"></div>
@@ -53,7 +53,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-/* Add your styles here if needed */
-</style>

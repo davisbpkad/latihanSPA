@@ -1,21 +1,21 @@
 <template>
-<div class="container mt-5 mb-5">
+<div class="container mt-4 mb-5" style="margin-bottom: 100px;">
   <!-- Product Input Form -->
   <div class="card mb-4">
     <div class="card-body">
-      <h5 class="card-title mb-3">Tambah Produk</h5>
-      <form @submit.prevent="handleSubmit">
+      <h5 class="card-title mb-3">{{ isEditMode ? 'Edit Produk' : 'Tambah Produk' }}</h5>
+      <form @submit.prevent="isEditMode ? handleUpdate() : handleSubmit()">
         <div class="row">
           <div class="col-md-4 mb-3">
             <label class="form-label">Pilih Produk dari API</label>
-            <select v-model="form.selectedApiId" class="form-select" required>
+            <select v-model="form.selectedApiId" class="form-select" required :disabled="isEditMode">
               <option disabled value="">Pilih Produk</option>
               <option v-for="item in apiProducts" :key="item.id" :value="item.id">{{ item.title }}</option>
             </select>
           </div>
           <div class="col-md-2 mb-3">
             <label class="form-label">Harga</label>
-            <input v-model.number="form.price" type="number" class="form-control" min="0" required />
+            <input v-model.number="form.price" type="number" class="form-control" min="1" required />
           </div>
           <div class="col-md-2 mb-3">
             <label class="form-label">Status Stok</label>
@@ -38,7 +38,8 @@
             <div class="form-control" style="min-height:60px; background:#f8f9fa;">{{ selectedApiProduct.description }}</div>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary">Tambah Produk</button>
+        <button type="submit" class="btn btn-primary me-2">{{ isEditMode ? 'Update Produk' : 'Tambah Produk' }}</button>
+        <button v-if="isEditMode" type="button" class="btn btn-secondary" @click="resetForm">Batal</button>
       </form>
     </div>
   </div>
@@ -48,20 +49,28 @@
     <h5>Produk yang Ditambahkan</h5>
     <div class="row">
       <div v-for="(prod, idx) in inputProducts" :key="idx" class="col-md-4 mb-3">
-        <ProductItem :product="prod" :index="idx" @update="handleUpdate" />
+        <ProductItem :product="prod" :index="idx" @edit="startEdit" @delete="handleDelete" @detail="showDetail" />
       </div>
     </div>
   </div>
+
+  <!-- Product Detail Modal -->
+  <ProductDetailModal 
+    :isVisible="isModalVisible" 
+    :product="selectedProduct" 
+    @close="closeModal" 
+  />
 </div>
 </template>
 
 <script>
 import ProductItem from '../components/ProductItem.vue'
+import ProductDetailModal from '../components/ProductDetailModal.vue'
 import { ref, onMounted, watch, computed } from 'vue'
 
 export default {
     name: 'ProductView',
-    components: { ProductItem },
+    components: { ProductItem, ProductDetailModal },
     setup() {
         const apiProducts = ref([])
         const inputProducts = ref([])
@@ -71,6 +80,10 @@ export default {
             stock: 1,
             stockStatus: 'ada',
         })
+        const isEditMode = ref(false)
+        const editIndex = ref(null)
+        const isModalVisible = ref(false)
+        const selectedProduct = ref(null)
 
         // Ambil data dari localStorage saat mounted
         onMounted(async () => {
@@ -110,6 +123,7 @@ export default {
 
         function handleSubmit() {
             if (!selectedApiProduct.value) return
+            if (form.value.price < 1) return // validasi harga minimal 1
             inputProducts.value.push({
                 name: selectedApiProduct.value.title,
                 price: form.value.price,
@@ -118,30 +132,86 @@ export default {
                 image: selectedApiProduct.value.image,
                 description: selectedApiProduct.value.description
             })
-            // Reset form
+            resetForm()
+        }
+
+        function startEdit(index) {
+            const prod = inputProducts.value[index]
+            if (!prod) return
+            isEditMode.value = true
+            editIndex.value = index
+            // Cari id produk API yang sesuai judul
+            const apiItem = apiProducts.value.find(item => item.title === prod.name)
+            form.value = {
+                selectedApiId: apiItem ? apiItem.id : '',
+                price: prod.price,
+                stock: prod.stock,
+                stockStatus: prod.stockStatus
+            }
+        }
+
+        function handleUpdate() {
+            if (editIndex.value === null || !selectedApiProduct.value) return
+            if (form.value.price < 1) return // validasi harga minimal 1
+            const prod = inputProducts.value[editIndex.value]
+            if (!prod) return
+            prod.name = selectedApiProduct.value.title
+            prod.price = form.value.price
+            prod.stock = form.value.stock
+            prod.stockStatus = form.value.stockStatus
+            prod.image = selectedApiProduct.value.image
+            prod.description = selectedApiProduct.value.description
+            resetForm()
+        }
+
+        function handleDelete(index) {
+            inputProducts.value.splice(index, 1)
+            resetForm()
+        }
+
+        function resetForm() {
             form.value = {
                 selectedApiId: '',
                 price: '',
                 stock: 1,
                 stockStatus: 'ada',
             }
+            isEditMode.value = false
+            editIndex.value = null
         }
 
-        // Handler update produk inputan
-        function handleUpdate({ index, price, stock, stockStatus }) {
-            const prod = inputProducts.value[index]
-            if (prod) {
-                prod.price = price
-                prod.stock = stock
-                prod.stockStatus = stockStatus
-            }
+        function showDetail(product) {
+            selectedProduct.value = product
+            isModalVisible.value = true
         }
 
-        return { apiProducts, form, inputProducts, handleSubmit, selectedApiProduct, handleUpdate }
+        function closeModal() {
+            isModalVisible.value = false
+            selectedProduct.value = null
+        }
+
+        return { 
+            apiProducts, 
+            form, 
+            inputProducts, 
+            handleSubmit, 
+            selectedApiProduct, 
+            isEditMode, 
+            startEdit, 
+            handleUpdate, 
+            handleDelete, 
+            resetForm,
+            isModalVisible,
+            selectedProduct,
+            showDetail,
+            closeModal
+        }
     }
 }
 </script>
 
 <style scoped>
-/* Add your styles here if needed */
+.container {
+  margin-bottom: 100px;
+}
 </style>

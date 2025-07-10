@@ -24,13 +24,8 @@ export default {
     },
     methods: {
       formatTitle(title) {
-        // Contoh logic function: kapitalisasi judul
         return title ? title.charAt(0).toUpperCase() + title.slice(1) : ''
       }
     }
 }
 </script>
-
-<style scoped>
-/* Add your styles here if needed */
-</style>
