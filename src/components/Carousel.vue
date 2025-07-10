@@ -1,20 +1,11 @@
 <template>
   <div class="carousel-outer mb-5">
     <div class="carousel-inner" @mouseenter="pause" @mouseleave="resume">
-      <transition name="slide" mode="out-in">
-        <div class="carousel-slide active" :key="current">
-          <div class="carousel-img-wrapper">
-            <img
-              v-if="imgLoaded[current]"
-              :src="images[current]"
-              class="carousel-img"
-              :alt="'Slide ' + (current + 1)"
-              @load="onImgLoad(current)"
-            />
-            <div v-else class="carousel-loader">Loading...</div>
-          </div>
+      <div class="carousel-track">
+        <div v-for="(img, idx) in images" :key="idx" :class="['carousel-slide', { active: idx === current }]">
+          <img :src="img" class="carousel-img" :alt="'Slide ' + (idx+1)" />
         </div>
-      </transition>
+      </div>
       <button v-if="images.length" class="carousel-control prev" @click="prevSlide">&#10094;</button>
       <button v-if="images.length" class="carousel-control next" @click="nextSlide">&#10095;</button>
       <div class="carousel-indicators">
@@ -30,9 +21,9 @@ export default {
   name: 'Carousel',
   setup() {
     const images = ref([
-      'https://images.unsplash.com/photo-1515168833906-d2a3b82b3029?auto=format&fit=crop&w=1100&q=80',
-      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1100&q=80',
-      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80'
+      "https://picsum.photos/id/1015/900/350",
+      "https://picsum.photos/id/1019/900/350",
+      "https://picsum.photos/id/1018/900/350"
     ])
     const current = ref(0)
     let interval = null
@@ -88,7 +79,6 @@ export default {
   position: relative;
   width: 100%;
   aspect-ratio: 16/6;
-  background: #666;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -118,13 +108,11 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #666;
 }
 .carousel-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  background: #666;
   border-radius: 0;
   display: block;
 }
@@ -136,7 +124,6 @@ export default {
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
-  background: #666;
 }
 .carousel-control {
   position: absolute;
@@ -149,7 +136,6 @@ export default {
   padding: 0 18px;
   border-radius: 50%;
   cursor: pointer;
-  z-index: 2;
   transition: background 0.2s;
 }
 .carousel-control.prev { left: 24px; }

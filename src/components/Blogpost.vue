@@ -26,7 +26,7 @@ export default {
         date: '2024-06-01',
         summary: 'Belanja online kini semakin mudah, namun Anda harus tetap waspada. Berikut tips singkat agar transaksi Anda aman.',
         content: 'Belanja online kini semakin mudah, namun Anda harus tetap waspada. Berikut tips singkat agar transaksi Anda aman:\n1. Gunakan situs terpercaya.\n2. Jangan mudah tergiur harga murah.\n3. Selalu cek review dan rating penjual.\n4. Gunakan metode pembayaran aman.',
-        image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80',
+        image: 'https://picsum.photos/id/1025/900/350',
         showFull: false
       },
       {
@@ -34,7 +34,7 @@ export default {
         date: '2024-05-20',
         summary: 'Produk berkualitas akan membuat Anda puas. Simak cara memilih produk terbaik di toko online.',
         content: 'Produk berkualitas akan membuat Anda puas. Simak cara memilih produk terbaik di toko online:\n1. Perhatikan deskripsi produk.\n2. Pilih penjual dengan reputasi baik.\n3. Bandingkan harga dan fitur antar produk.\n4. Tanyakan langsung ke penjual jika ragu.',
-        image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80',
+        image: 'https://picsum.photos/id/1022/900/350',
         showFull: false
       },
       {
@@ -42,7 +42,7 @@ export default {
         date: '2024-05-10',
         summary: 'Jangan lewatkan promo menarik dan diskon besar-besaran di bulan ini. Cek info lengkapnya di sini.',
         content: 'Jangan lewatkan promo menarik dan diskon besar-besaran di bulan ini. Cek info lengkapnya di sini:\n- Diskon hingga 70%\n- Gratis ongkir\n- Cashback spesial\n- Flash sale setiap hari!',
-        image: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80',
+        image: 'https://picsum.photos/id/1020/900/350',
         showFull: false
       }
     ])
