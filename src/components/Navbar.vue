@@ -48,6 +48,21 @@ function toggleNavbar() {
 <style scoped>
 .navbar {
   box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  position: sticky;
+  top: 0;
+  z-index: 3000;
+  background: #fff;
+}
+.navbar-nav {
+  gap: 0.75rem;
+}
+.nav-item {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+.nav-link {
+  padding-left: 1.2rem;
+  padding-right: 1.2rem;
 }
 @media (max-width: 991px) {
   .navbar-toggler {
@@ -59,11 +74,6 @@ function toggleNavbar() {
   .navbar-collapse.show {
     padding: 1.5rem 1rem 1rem 1rem;
     width: 90vw;
-    max-width: 340px;
-    min-width: 220px;
-    margin: 0 auto;
-    left: 0;
-    right: 0;
   }
   .navbar-nav {
     flex-direction: column !important;
@@ -79,11 +89,12 @@ function toggleNavbar() {
     text-align: center;
     display: flex;
     justify-content: center;
+    margin: 0.5rem 0;
   }
   .nav-link {
     width: 100%;
     font-size: 1.05rem;
-    padding: 0.7rem 0;
+    padding: 1rem 0;
     border-radius: 1.5rem;
     margin: 0 auto;
     transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
