@@ -1,6 +1,5 @@
 <template>
     <div class="container mt-5">
-        <div class="card justify-content-center p-4" style="border-radius: 16px;">
             <div class="col-md-8 mx-auto">
                 <div class="mb-4 text-center">
                     <h1 class="display-4">My Blog</h1>
@@ -33,7 +32,6 @@
                     </a>
                 </div>
             </div>
-        </div>
     </div>
 </template>
 

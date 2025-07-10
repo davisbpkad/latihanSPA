@@ -26,20 +26,28 @@
               <router-link class="nav-link" to="/products">Products</router-link>
             </li>
             <li class="nav-item">
+              <router-link class="nav-link" to="/gallery">Gallery</router-link>
+            </li>
+            <li class="nav-item">
               <router-link class="nav-link" to="/about">About</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/contact">Contact</router-link>
             </li>
           </ul>
         </div>
       </div>
     </nav>
-    <div class="container mt-4">
+    <div class="container">
       <router-view />
     </div>
+    <Footer />
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import Footer from './components/Footer.vue';
 
 const isNavbarOpen = ref(false);
 
