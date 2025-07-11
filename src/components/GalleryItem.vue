@@ -1,10 +1,10 @@
 <template>
-  <div class="card h-100 gallery-card">
+  <div class="nb-card gallery-card h-100">
     <div class="image-container">
       <img
         :src="gallery.image"
         :alt="gallery.title"
-        class="card-img-top gallery-image"
+        class="nb-card-img-top gallery-image"
         @load="imageLoaded = true"
         @error="imageError = true"
       />
@@ -15,11 +15,11 @@
         <i class="fas fa-exclamation-triangle"></i>
       </div>
     </div>
-    <div class="card-body p-3">
-      <h6 class="card-title text-truncate mb-2" :title="gallery.title">
+    <div class="nb-card-body p-3">
+      <h6 class="nb-card-title text-truncate mb-2" :title="gallery.title">
         {{ formatTitle(gallery.title) }}
       </h6>
-      <p class="card-text small text-muted mb-2" :title="gallery.description">
+      <p class="nb-card-text small text-muted mb-2" :title="gallery.description">
         {{ gallery.description }}
       </p>
       <div class="gallery-meta">
@@ -65,34 +65,38 @@ export default {
 </script>
 
 <style scoped>
-.gallery-card {
+.nb-card.gallery-card {
+  background: #fff200;
+  border: 4px solid #111;
+  border-radius: 12px;
+  box-shadow: 8px 8px 0 #111;
+  color: #111;
   transition: transform 0.2s, box-shadow 0.2s;
-  border: none;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  max-width: 100%;
+  margin-bottom: 2rem;
 }
-
-.gallery-card:hover {
+.nb-card.gallery-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 0 #111;
 }
-
 .image-container {
   position: relative;
   height: 200px;
   overflow: hidden;
 }
-
-.gallery-image {
+.nb-card-img-top.gallery-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border: 3px solid #111;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 4px 0 #111;
+  background: #fff;
   transition: transform 0.3s;
 }
-
-.gallery-card:hover .gallery-image {
+.nb-card.gallery-card:hover .nb-card-img-top.gallery-image {
   transform: scale(1.05);
 }
-
 .image-loading {
   position: absolute;
   top: 50%;
@@ -100,7 +104,6 @@ export default {
   transform: translate(-50%, -50%);
   color: #6c757d;
 }
-
 .image-error {
   position: absolute;
   top: 50%;
@@ -109,24 +112,28 @@ export default {
   color: #dc3545;
   font-size: 2rem;
 }
-
+.nb-card-body {
+  padding: 1.2rem 1rem 1rem 1rem;
+}
+.nb-card-title {
+  font-size: 1.1rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #111;
+  margin-bottom: 0.3rem;
+}
+.nb-card-text {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 0.5rem;
+}
 .gallery-meta {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 0.5rem;
   padding-top: 0.5rem;
-  border-top: 1px solid #e9ecef;
-}
-
-.card-title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #333;
-}
-
-.card-text {
-  font-size: 0.875rem;
-  line-height: 1.4;
+  border-top: 2px solid #111;
 }
 </style>

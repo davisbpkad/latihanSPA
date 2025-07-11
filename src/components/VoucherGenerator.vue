@@ -1,14 +1,14 @@
 <template>
   <div class="voucher-section mb-5">
-    <div class="card voucher-card">
-      <div class="card-body text-center">
-        <h4 class="card-title mb-4">
+    <div class="nb-card voucher-card">
+      <div class="nb-card-body text-center">
+        <h4 class="nb-card-title mb-4">
           <i class="text-primary"></i>
           Random Voucher Generator
         </h4>
 
          <!-- Success Message -->
-         <div v-if="showSuccess" class="alert alert-success mt-3" role="alert">
+         <div v-if="showSuccess" class="nb-alert nb-alert-success mt-3" role="alert">
           <i class="fas fa-check-circle me-2"></i>
           Voucher code copied to clipboard!
         </div>
@@ -18,23 +18,23 @@
           <div class="voucher-code">
             <span class="voucher-text">{{ currentVoucher.code }}</span>
             <button 
-              class="btn btn-sm btn-outline-light ms-2"
+              class="nb-btn nb-btn-copy ms-2"
               @click="copyToClipboard"
               title="Copy voucher code"
             >
-              <i class="fas fa-copy btn-light"></i>
+              <i class="fas fa-copy"></i>
             </button>
           </div>
           <div class="voucher-details mt-2">
-            <span class="badge bg-success me-2">{{ currentVoucher.discount }}% OFF</span>
-            <span class="text-light fw-bold">{{ currentVoucher.description }}</span>
+            <span class="nb-badge nb-badge-success me-2">{{ currentVoucher.discount }}% OFF</span>
+            <span class="nb-desc fw-bold">{{ currentVoucher.description }}</span>
           </div>
         </div>
 
         <!-- Generate Button -->
         <div class="voucher-actions">
           <button 
-            class="btn btn-primary btn-lg"
+            class="nb-btn nb-btn-primary btn-lg"
             @click="generateVoucher"
             :disabled="isGenerating"
           >
@@ -118,22 +118,40 @@ onMounted(() => {
 
 <style scoped>
 .voucher-card {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  background: #fff;
+  border: 4px solid #111;
+  box-shadow: 8px 8px 0 #111;
+  border-radius: 12px;
+  color: #111;
+  /* margin: 0 auto; */
+  width: 100%;
+  max-width: 100%;
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.voucher-card .card-body {
-  padding: 2rem;
+.nb-card-body {
+  padding: 1.1rem 1rem 1rem 1rem;
+}
+
+.nb-card-title {
+  font-size: 1.25rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #111;
+  margin-bottom: 1.1rem;
 }
 
 .voucher-display {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 1.5rem;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #ffe600;
+  border: 3px solid #111;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 4px 4px 0 #111;
+  margin-bottom: 1rem;
 }
 
 .voucher-code {
@@ -145,14 +163,100 @@ onMounted(() => {
 
 .voucher-text {
   font-family: 'Courier New', monospace;
-  font-size: 1.5rem;
-  font-weight: bold;
-  letter-spacing: 2px;
-  background: rgba(255, 255, 255, 0.9);
-  color: #333;
-  padding: 0.5rem 1rem;
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  background: #fff;
+  color: #111;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  border: 3px dashed #111;
+  box-shadow: 2px 2px 0 #111;
+}
+
+.nb-btn {
+  font-weight: 900;
+  border: 3px solid #111;
+  box-shadow: 2px 2px 0 #111;
   border-radius: 8px;
-  border: 2px dashed #667eea;
+  background: #fff;
+  color: #111;
+  padding: 0.4rem 1rem;
+  font-size: 0.98rem;
+  transition: all 0.1s;
+  cursor: pointer;
+}
+
+.nb-btn-primary {
+  background: #ff6b6b;
+  color: #fff;
+  border: 3px solid #111;
+  box-shadow: 4px 4px 0 #111;
+}
+
+.nb-btn-primary:disabled {
+  background: #ccc;
+  color: #888;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.nb-btn-copy {
+  background: #ffe600;
+  color: #111;
+  border: 3px solid #111;
+  box-shadow: 2px 2px 0 #111;
+  padding: 0.3rem 0.7rem;
+  font-size: 1rem;
+}
+
+.nb-btn:hover, .nb-btn-primary:hover, .nb-btn-copy:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #111;
+}
+
+.nb-badge {
+  display: inline-block;
+  font-weight: 900;
+  font-size: 0.98rem;
+  padding: 0.3rem 0.8rem;
+  border: 3px solid #111;
+  border-radius: 6px;
+  background: #fff;
+  color: #111;
+  box-shadow: 2px 2px 0 #111;
+}
+
+.nb-badge-success {
+  background: #00e676;
+  color: #111;
+}
+
+.nb-alert {
+  background: #ffe600;
+  color: #111;
+  border: 3px solid #111;
+  border-radius: 8px;
+  font-weight: 900;
+  font-size: 1rem;
+  box-shadow: 2px 2px 0 #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem;
+  margin-bottom: 1rem;
+}
+
+.nb-alert-success {
+  background: #00e676;
+  color: #111;
+}
+
+.nb-desc {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111;
 }
 
 .voucher-details {
@@ -161,61 +265,36 @@ onMounted(() => {
   justify-content: center;
   gap: 0.5rem;
   flex-wrap: wrap;
+  margin-top: 0.5rem;
 }
 
 .voucher-actions {
-  margin: 1rem 0;
+  margin: 1.1rem 0 0 0;
 }
 
-.btn-primary {
-  background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-  border: none;
-  padding: 0.75rem 2rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
-}
-
-.btn-primary:disabled {
-  transform: none;
-  box-shadow: none;
-}
-
-.alert {
-  border: none;
-  border-radius: 8px;
-  animation: slideIn 0.3s ease;
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Responsive design */
 @media (max-width: 768px) {
-  .voucher-card .card-body {
-    padding: 1.5rem;
+  .nb-card-body {
+    padding: 0.7rem 0.5rem 0.5rem 0.5rem;
   }
-  
   .voucher-text {
-    font-size: 1.2rem;
-    letter-spacing: 1px;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    padding: 0.3rem 0.6rem;
   }
-
   .voucher-details {
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.18rem;
+  }
+  .voucher-card {
+    max-width: 98vw;
+    min-height: unset;
+  }
+  .nb-card-title {
+    font-size: 1rem;
+    margin-bottom: 0.7rem;
+  }
+  .voucher-display {
+    padding: 0.6rem;
   }
 }
 </style> 

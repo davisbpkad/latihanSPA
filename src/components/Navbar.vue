@@ -46,92 +46,140 @@ function toggleNavbar() {
 </script>
 
 <style scoped>
-/* Main navbar container */
 .navbar {
-  box-shadow: 0 2px 8px rgba(0,0,0,0.03); /* Subtle shadow for depth */
-  position: sticky; /* Stays at top when scrolling */
-  top: 0; /* Position at top of viewport */
-  z-index: 3000; /* High z-index to stay above other content */
-  background: #fff; /* White background */
+  background: #fff200;
+  border-bottom: 4px solid #111;
+  box-shadow: 0 8px 0 #111;
+  position: sticky;
+  top: 0;
+  z-index: 3000;
 }
-
-/* Navigation items container */
+.navbar-brand {
+  font-weight: 900;
+  font-size: 2rem;
+  text-transform: uppercase;
+  color: #111 !important;
+  letter-spacing: 2px;
+  border: 3px solid #111;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 4px 4px 0 #111;
+  padding: 0.2rem 1.2rem;
+  margin-right: 1.5rem;
+  transition: all 0.1s;
+}
+.navbar-brand:hover {
+  background: #00e676;
+  color: #111 !important;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #111;
+}
 .navbar-nav {
-  gap: 0.75rem; /* Space between nav items on desktop */
+  gap: 0.75rem;
 }
-
-/* Individual navigation item */
 .nav-item {
-  margin-left: 0.5rem; /* Left margin for spacing */
-  margin-right: 0.5rem; /* Right margin for spacing */
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }
-
-/* Navigation links */
 .nav-link {
-  padding-left: 1.2rem; /* Left padding for clickable area */
-  padding-right: 1.2rem; /* Right padding for clickable area */
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #111 !important;
+  border: 3px solid #111;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 2px 2px 0 #111;
+  padding: 0.5rem 1.2rem;
+  margin: 0 0.2rem;
+  transition: all 0.1s;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
 }
-/* Mobile responsive styles (screens smaller than 992px) */
+.nav-link:hover,
+.nav-link.router-link-exact-active {
+  background: #00e676;
+  color: #111 !important;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #111;
+}
+.navbar-toggler {
+  border: 3px solid #111;
+  background: #fff200;
+  border-radius: 8px;
+  box-shadow: 2px 2px 0 #111;
+  padding: 0.4rem 0.8rem;
+  transition: all 0.1s;
+}
+.navbar-toggler:focus,
+.navbar-toggler:hover {
+  background: #00e676;
+  box-shadow: 4px 4px 0 #111;
+}
+.navbar-toggler-icon {
+  background-image: none;
+  width: 2rem;
+  height: 2rem;
+  display: inline-block;
+  position: relative;
+}
+.navbar-toggler-icon:before,
+.navbar-toggler-icon:after,
+.navbar-toggler-icon div {
+  content: '';
+  display: block;
+  height: 4px;
+  background: #111;
+  margin: 5px 0;
+  border-radius: 2px;
+}
+.navbar-toggler-icon:before {
+  width: 100%;
+}
+.navbar-toggler-icon:after {
+  width: 80%;
+}
+.navbar-toggler-icon div {
+  width: 60%;
+}
 @media (max-width: 991px) {
-  /* Hamburger menu button */
   .navbar-toggler {
-    position: absolute; /* Position absolutely within navbar */
-    right: 16px; /* Distance from right edge */
-    top: 12px; /* Distance from top */
-    z-index: 1100; /* High z-index to stay above collapsed menu */
+    position: absolute;
+    right: 16px;
+    top: 12px;
+    z-index: 1100;
   }
-  
-  /* Expanded mobile menu container */
   .navbar-collapse.show {
-    padding: 1.5rem 1rem 1rem 1rem; /* Padding around menu items */
-    width: 90vw; /* Take up 90% of viewport width */
+    padding: 1.5rem 1rem 1rem 1rem;
+    width: 90vw;
+    background: #fff200;
+    border: 3px solid #111;
+    box-shadow: 4px 4px 0 #111;
+    border-radius: 12px;
   }
-  
-  /* Mobile navigation items container */
   .navbar-nav {
-    flex-direction: column !important; /* Stack items vertically */
-    align-items: center !important; /* Center items horizontally */
-    justify-content: center !important; /* Center items vertically */
-    gap: 0.25rem; /* Reduced gap between items for compact layout */
-    width: 100%; /* Full width */
-    margin: 0 auto; /* Center the container */
-    text-align: center; /* Center text */
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.25rem;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
   }
-  
-  /* Individual mobile navigation item */
   .nav-item {
-    width: 100%; /* Full width */
-    text-align: center; /* Center text */
-    display: flex; /* Use flexbox for centering */
-    justify-content: center; /* Center horizontally */
-    margin: 0.125rem 0; /* Minimal vertical margin for compact spacing */
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin: 0.125rem 0;
   }
-  
-  /* Mobile navigation links */
   .nav-link {
-    width: 100%; /* Full width for better touch targets */
-    font-size: 1.05rem; /* Slightly larger font for mobile */
-    padding: 1rem 0; /* Vertical padding for touch targets */
-    border-radius: 1.5rem; /* Rounded corners */
-    margin: 0 auto; /* Center the link */
-    transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s; /* Smooth transitions */
-    text-align: center; /* Center text */
-    display: inline-block; /* Block display for full width */
+    width: 100%;
+    font-size: 1.05rem;
+    padding: 1rem 0;
+    border-radius: 8px;
+    margin: 0 auto;
+    text-align: center;
+    display: inline-block;
   }
-}
-/* Hover and active state styles for navigation links */
-.custom-hover {
-  transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s; /* Smooth transitions for all properties */
-  border-radius: 4rem; /* Rounded corners for pill-like appearance */
-}
-
-/* Hover effect and active route styling */
-.custom-hover:hover,
-.custom-hover.router-link-exact-active {
-  background: #7cb6f8; /* Light blue background */
-  color: #ffffff !important; /* White text with high priority */
-  border-radius: 4rem; /* Maintain rounded corners */
-  transform: scale(1.07); /* Slight scale up effect */
-  box-shadow: 0 2px 8px rgba(13, 110, 253, 0.08); /* Subtle blue shadow */
 }
 </style>

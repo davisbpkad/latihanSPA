@@ -1,33 +1,31 @@
 <template>
-  <div class="search-container mb-4">
-    <div class="card">
-      <div class="card-body">
-        <h6 class="card-title mb-3">
-          <i class="fas fa-search me-2"></i>
-          Cari Produk
-        </h6>
-        <div class="input-group">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Masukkan nama produk..."
-            v-model="searchQuery"
-            @input="handleSearch"
-          />
-          <button 
-            class="btn btn-outline-secondary" 
-            type="button"
-            @click="clearSearch"
-            :disabled="!searchQuery"
-          >
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
-        <div v-if="searchQuery" class="mt-2">
-          <small class="text-muted">
-            Menampilkan {{ filteredCount }} dari {{ totalCount }} produk
-          </small>
-        </div>
+  <div class="search-container nb-card mb-4">
+    <div class="nb-card-body">
+      <h6 class="nb-card-title mb-3">
+        <i class="fas fa-search me-2"></i>
+        Cari Produk
+      </h6>
+      <div class="input-group">
+        <input
+          type="text"
+          class="nb-input nb-search-input"
+          placeholder="Masukkan nama produk..."
+          v-model="searchQuery"
+          @input="handleSearch"
+        />
+        <button 
+          class="nb-btn nb-btn-secondary" 
+          type="button"
+          @click="clearSearch"
+          :disabled="!searchQuery"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div v-if="searchQuery" class="mt-2">
+        <small class="text-muted">
+          Menampilkan {{ filteredCount }} dari {{ totalCount }} produk
+        </small>
       </div>
     </div>
   </div>
@@ -80,22 +78,74 @@ function updateFilteredCount() {
 </script>
 
 <style scoped>
-.search-container {
+.search-container.nb-card {
+  background: #fff200;
+  border: 4px solid #111;
+  border-radius: 12px;
+  box-shadow: 8px 8px 0 #111;
+  color: #111;
+  padding: 1.2rem 1rem;
+  margin-bottom: 2rem;
   position: sticky;
   top: 80px;
   z-index: 1000;
-  background: white;
+}
+.nb-card-body {
+  padding: 0;
+}
+.nb-card-title {
+  font-size: 1.1rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #111;
+  margin-bottom: 0.5rem;
+}
+.nb-input.nb-search-input {
+  border: 3px solid #111;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  background: #fff;
+  color: #111;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  box-shadow: 2px 2px 0 #111;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  transition: all 0.1s;
 }
-
-.input-group .form-control:focus {
-  border-color: #7cb6f8;
-  box-shadow: 0 0 0 0.2rem rgba(124, 182, 248, 0.25);
+.nb-input.nb-search-input:focus {
+  outline: none;
+  border-color: #00e676;
+  box-shadow: 4px 4px 0 #111;
 }
-
-.btn-outline-secondary:hover {
-  background-color: #6c757d;
-  border-color: #6c757d;
+.nb-btn {
+  font-weight: 900;
+  border: 3px solid #111;
+  box-shadow: 2px 2px 0 #111;
+  border-radius: 8px;
+  background: #fff;
+  color: #111;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  transition: all 0.1s;
+  cursor: pointer;
+}
+.nb-btn-secondary {
+  background: #ff6b6b;
+  color: #fff;
+  border: 3px solid #111;
+  box-shadow: 4px 4px 0 #111;
+}
+.nb-btn-secondary:disabled {
+  background: #ccc;
+  color: #888;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+.nb-btn:hover {
+  background: #00e676;
+  color: #111;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #111;
 }
 </style> 

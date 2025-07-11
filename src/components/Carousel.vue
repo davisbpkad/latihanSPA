@@ -69,10 +69,11 @@ export default {
 <style scoped>
 .carousel-outer {
   width: 100%;
-  max-width: 1600px;
-  margin: 0 auto;
-  background: #eee;
-  border-radius: 18px;
+  max-width: 100%;
+  background: #fff200;
+  border: 4px solid #111;
+  border-radius: 12px;
+  box-shadow: 8px 8px 0 #111;
   overflow: hidden;
 }
 .carousel-inner {
@@ -82,6 +83,9 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  border-bottom: 4px solid #111;
+  background: #fff;
+  min-height: 340px;
 }
 .carousel-track {
   width: 100%;
@@ -115,32 +119,43 @@ export default {
   object-fit: cover;
   border-radius: 0;
   display: block;
+  border: 3px solid #111;
+  box-shadow: 4px 4px 0 #111;
 }
 .carousel-loader {
   width: 100%;
   height: 100%;
-  color: #fff;
+  color: #111;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
+  font-weight: 900;
 }
 .carousel-control {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0,0,0,0.3);
-  border: none;
-  color: #fff;
+  background: #fff200;
+  border: 3px solid #111;
+  color: #111;
   font-size: 2.5rem;
-  padding: 0 18px;
-  border-radius: 50%;
+  font-weight: 900;
+  padding: 0 22px;
+  border-radius: 8px;
+  box-shadow: 4px 4px 0 #111;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.1s;
+  z-index: 2;
 }
 .carousel-control.prev { left: 24px; }
 .carousel-control.next { right: 24px; }
-.carousel-control:hover { background: rgba(0,0,0,0.5); }
+.carousel-control:hover {
+  background: #00e676;
+  color: #111;
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 6px 6px 0 #111;
+}
 .carousel-indicators {
   position: absolute;
   left: 0; right: 0; bottom: 18px;
@@ -150,18 +165,21 @@ export default {
 }
 .carousel-indicators span {
   display: inline-block;
-  width: 18px;
-  height: 6px;
+  width: 22px;
+  height: 10px;
   background: #fff;
-  opacity: 0.5;
+  opacity: 1;
+  border: 3px solid #111;
   border-radius: 4px;
+  box-shadow: 2px 2px 0 #111;
   cursor: pointer;
   transition: all 0.2s;
 }
 .carousel-indicators .active {
-  opacity: 1;
-  background: #007bff;
-  width: 32px;
+  background: #00e676;
+  border-color: #111;
+  width: 36px;
+  box-shadow: 4px 4px 0 #111;
 }
 /* Animasi geser */
 .slide-enter-active, .slide-leave-active {
@@ -177,7 +195,7 @@ export default {
 }
 @media (max-width: 900px) {
   .carousel-outer { max-width: 100%; }
-  .carousel-inner { aspect-ratio: 16/8; }
+  .carousel-inner { aspect-ratio: 16/8; min-height: 220px; }
 }
 @media (max-width: 600px) {
   .carousel-inner { aspect-ratio: 16/12; min-height: 180px; }

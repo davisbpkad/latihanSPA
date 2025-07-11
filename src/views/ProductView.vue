@@ -1,9 +1,9 @@
 <template>
 <div class="container mt-4 mb-5" style="margin-bottom: 100px;">
   <!-- Product Input Form -->
-  <div class="card mb-4">
-    <div class="card-body">
-      <h5 class="card-title mb-3">{{ isEditMode ? 'Edit Produk' : 'Tambah Produk' }}</h5>
+  <div class="nb-card nb-form mb-4">
+    <div class="nb-card-body">
+      <h5 class="nb-card-title mb-3">{{ isEditMode ? 'Edit Produk' : 'Tambah Produk' }}</h5>
       <ProductForm
         :form="form"
         :apiProducts="apiProducts"
@@ -23,38 +23,46 @@
 
   <!-- Hasil Inputan Produk -->
   <div v-if="filteredProducts.length" class="mb-4">
-    <h5>
-      <i class="fas fa-box me-2"></i>
-      Produk yang Ditambahkan
-      <span v-if="searchQuery" class="text-muted">(Hasil pencarian)</span>
-    </h5>
-    <div class="row">
-      <div v-for="(prod, idx) in filteredProducts" :key="idx" class="col-md-4 mb-3">
-        <ProductItem 
-          :product="prod" 
-          :index="getOriginalIndex(idx)" 
-          @edit="startEdit" 
-          @delete="handleDelete" 
-          @detail="showDetail" 
-        />
+    <div class="nb-card nb-card-list mb-3">
+      <div class="nb-card-body">
+        <h5 class="nb-card-title">
+          <i class="fas fa-box me-2"></i>
+          Produk yang Ditambahkan
+          <span v-if="searchQuery" class="nb-card-muted">(Hasil pencarian)</span>
+        </h5>
+        <div class="row">
+          <div v-for="(prod, idx) in filteredProducts" :key="idx" class="col-md-4 mb-3">
+            <ProductItem 
+              :product="prod" 
+              :index="getOriginalIndex(idx)" 
+              @edit="startEdit" 
+              @delete="handleDelete" 
+              @detail="showDetail" 
+            />
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- No products message -->
-  <div v-else-if="inputProducts.length === 0" class="text-center py-5">
-    <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
-    <h5 class="text-muted">Belum ada produk</h5>
-    <p class="text-muted">
-      Tambahkan produk pertama Anda!
-    </p>
+  <div v-else-if="inputProducts.length === 0" class="nb-card nb-card-empty text-center py-5 mb-4">
+    <div class="nb-card-body">
+      <i class="fas fa-box-open fa-3x nb-card-muted mb-3"></i>
+      <h5 class="nb-card-title nb-card-muted">Belum ada produk</h5>
+      <p class="nb-card-muted">
+        Tambahkan produk pertama Anda!
+      </p>
+    </div>
   </div>
 
   <!-- No search results message -->
-  <div v-else-if="searchQuery && filteredProducts.length === 0" class="text-center py-5">
-    <i class="fas fa-search fa-3x text-muted mb-3"></i>
-    <h5 class="text-muted">Tidak ada hasil</h5>
-    <p class="text-muted">Tidak ada produk yang cocok dengan pencarian "{{ searchQuery }}"</p>
+  <div v-else-if="searchQuery && filteredProducts.length === 0" class="nb-card nb-card-empty text-center py-5 mb-4">
+    <div class="nb-card-body">
+      <i class="fas fa-search fa-3x nb-card-muted mb-3"></i>
+      <h5 class="nb-card-title nb-card-muted">Tidak ada hasil</h5>
+      <p class="nb-card-muted">Tidak ada produk yang cocok dengan pencarian "{{ searchQuery }}"</p>
+    </div>
   </div>
 
   <!-- Product Detail Modal -->
@@ -63,6 +71,8 @@
     :product="selectedProduct" 
     @close="closeModal" 
   />
+</div>
+<div class="container">
 </div>
 </template>
 
@@ -212,14 +222,49 @@ function getOriginalIndex(filteredIndex) {
 
 <style scoped>
 .container {
-  margin-bottom: 100px;
+  margin-bottom: 3.5rem;
 }
-
-@media (min-width: 992px) {
-  .sticky-form {
-    position: sticky;
-    top: 90px;
-    z-index: 10;
+.nb-card {
+  background: #ffffff;
+  border: 4px solid #111;
+  border-radius: 12px;
+  box-shadow: 8px 8px 0 #111;
+  color: #111;
+  margin-bottom: 1rem;
+}
+.nb-card-body {
+  padding: 2rem 1.5rem;
+  margin-bottom: 1rem;
+  
+}
+.nb-card-title {
+  font-size: 1.3rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #111;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+}
+.nb-card-muted {
+  color: #888 !important;
+  font-weight: 700;
+}
+.nb-card-list {
+  margin-bottom: 2rem;
+}
+.nb-card-empty {
+  background: #fff;
+  border: 4px dashed #111;
+  box-shadow: 4px 4px 0 #111;
+  color: #888;
+  border-radius: 12px;
+}
+@media (max-width: 991px) {
+  .nb-card-body {
+    padding: 1.2rem 0.7rem;
+  }
+  .nb-card-title {
+    font-size: 1.05rem;
   }
 }
 </style>

@@ -54,7 +54,7 @@ onMounted(async () => {
 
 <style scoped>
 .container { max-width: 1200px; }
-.row { margin: 0 -8px; }
+.row { margin: 0 -8px; display: flex; flex-wrap: wrap; gap: 1.5rem; }
 .col-12, .col-sm-6, .col-md-4, .col-lg-3 { padding: 0 8px; }
 .spinner-border { color: #7cb6f8; }
 </style>
