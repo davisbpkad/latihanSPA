@@ -15,14 +15,46 @@
     </div>
   </div>
 
+  <!-- Search Component -->
+  <ProductSearch 
+    :products="inputProducts" 
+    @search="handleSearch"
+  />
+
   <!-- Hasil Inputan Produk -->
-  <div v-if="inputProducts.length" class="mb-4">
-    <h5>Produk yang Ditambahkan</h5>
+  <div v-if="filteredProducts.length" class="mb-4">
+    <h5>
+      <i class="fas fa-box me-2"></i>
+      Produk yang Ditambahkan
+      <span v-if="searchQuery" class="text-muted">(Hasil pencarian)</span>
+    </h5>
     <div class="row">
-      <div v-for="(prod, idx) in inputProducts" :key="idx" class="col-md-4 mb-3">
-        <ProductItem :product="prod" :index="idx" @edit="startEdit" @delete="handleDelete" @detail="showDetail" />
+      <div v-for="(prod, idx) in filteredProducts" :key="idx" class="col-md-4 mb-3">
+        <ProductItem 
+          :product="prod" 
+          :index="getOriginalIndex(idx)" 
+          @edit="startEdit" 
+          @delete="handleDelete" 
+          @detail="showDetail" 
+        />
       </div>
     </div>
+  </div>
+
+  <!-- No products message -->
+  <div v-else-if="inputProducts.length === 0" class="text-center py-5">
+    <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+    <h5 class="text-muted">Belum ada produk</h5>
+    <p class="text-muted">
+      Tambahkan produk pertama Anda!
+    </p>
+  </div>
+
+  <!-- No search results message -->
+  <div v-else-if="searchQuery && filteredProducts.length === 0" class="text-center py-5">
+    <i class="fas fa-search fa-3x text-muted mb-3"></i>
+    <h5 class="text-muted">Tidak ada hasil</h5>
+    <p class="text-muted">Tidak ada produk yang cocok dengan pencarian "{{ searchQuery }}"</p>
   </div>
 
   <!-- Product Detail Modal -->
@@ -39,9 +71,12 @@ import { ref, onMounted, watch, computed } from 'vue'
 import ProductItem from '../components/ProductItem.vue'
 import ProductDetailModal from '../components/ProductDetailModal.vue'
 import ProductForm from '../components/ProductForm.vue'
+import ProductSearch from '../components/ProductSearch.vue'
 
 const apiProducts = ref([])
 const inputProducts = ref([])
+const filteredProducts = ref([])
+const searchQuery = ref('')
 const form = ref({
   selectedApiId: '',
   price: '',
@@ -63,12 +98,15 @@ onMounted(async () => {
   if (saved) {
     try {
       inputProducts.value = JSON.parse(saved)
+      filteredProducts.value = [...inputProducts.value] // Initialize filtered products
     } catch {}
   }
 })
 
 watch(inputProducts, (val) => {
   localStorage.setItem('inputProducts', JSON.stringify(val))
+  // Update filtered products when input products change
+  handleSearch(searchQuery.value)
 }, { deep: true })
 
 watch(() => form.value.stockStatus, (val) => {
@@ -149,6 +187,28 @@ function showDetail(product) {
 function closeModal() {
   isModalVisible.value = false
   selectedProduct.value = null
+}
+
+// Search functionality
+function handleSearch(query) {
+  searchQuery.value = query
+  if (!query.trim()) {
+    filteredProducts.value = [...inputProducts.value]
+  } else {
+    const lowercaseQuery = query.toLowerCase()
+    filteredProducts.value = inputProducts.value.filter(product =>
+      product.name.toLowerCase().includes(lowercaseQuery)
+    )
+  }
+}
+
+// Get original index for edit/delete operations
+function getOriginalIndex(filteredIndex) {
+  const filteredProduct = filteredProducts.value[filteredIndex]
+  return inputProducts.value.findIndex(product => 
+    product.name === filteredProduct.name && 
+    product.price === filteredProduct.price
+  )
 }
 </script>
 
