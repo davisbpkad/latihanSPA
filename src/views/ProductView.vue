@@ -230,12 +230,11 @@ function getOriginalIndex(filteredIndex) {
   border-radius: 12px;
   box-shadow: 8px 8px 0 #111;
   color: #111;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 .nb-card-body {
   padding: 2rem 1.5rem;
-  margin-bottom: 1rem;
-  
+  margin-bottom: 0.8rem;
 }
 .nb-card-title {
   font-size: 1.3rem;
@@ -251,6 +250,7 @@ function getOriginalIndex(filteredIndex) {
 }
 .nb-card-list {
   margin-bottom: 2rem;
+  
 }
 .nb-card-empty {
   background: #fff;
