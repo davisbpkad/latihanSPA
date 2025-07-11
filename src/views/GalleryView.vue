@@ -28,6 +28,8 @@
 <script>
 import GalleryItem from '../components/GalleryItem.vue'
 import { ref, onMounted } from 'vue'
+import { generateImageData } from '../utils/api.js'
+import { DEFAULT_VALUES } from '../constants/api.js'
 
 export default {
   name: 'GalleryView',
@@ -39,9 +41,15 @@ export default {
 
     onMounted(async () => {
       try {
-        const res = await fetch("https://fakestoreapi.com/products?limit=16")
-        if (!res.ok) throw new Error(`Error: ${res.status}`)
-        gallerys.value = await res.json()
+        const images = []
+        
+        // Generate image data using utility function
+        for (let i = 1; i <= DEFAULT_VALUES.GALLERY_IMAGE_COUNT; i++) {
+          const imageData = await generateImageData(i)
+          images.push(imageData)
+        }
+        
+        gallerys.value = images
       } catch (err) {
         error.value = err.message
       } finally {
@@ -53,3 +61,21 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.container {
+  max-width: 1200px;
+}
+
+.row {
+  margin: 0 -8px;
+}
+
+.col-12, .col-sm-6, .col-md-4, .col-lg-3 {
+  padding: 0 8px;
+}
+
+.spinner-border {
+  color: #7cb6f8;
+}
+</style>

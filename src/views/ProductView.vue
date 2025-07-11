@@ -72,9 +72,12 @@ import ProductItem from '../components/ProductItem.vue'
 import ProductDetailModal from '../components/ProductDetailModal.vue'
 import ProductForm from '../components/ProductForm.vue'
 import ProductSearch from '../components/ProductSearch.vue'
+import { fetchProducts } from '../utils/api.js'
+import { useLocalStorage } from '../composables/useLocalStorage.js'
 
+// State management
 const apiProducts = ref([])
-const inputProducts = ref([])
+const { value: inputProducts } = useLocalStorage('inputProducts', [])
 const filteredProducts = ref([])
 const searchQuery = ref('')
 const form = ref({
@@ -90,22 +93,17 @@ const selectedProduct = ref(null)
 
 onMounted(async () => {
   try {
-    const res = await fetch("https://fakestoreapi.com/products?limit=12")
-    if (!res.ok) throw new Error(`Error: ${res.status}`)
-    apiProducts.value = await res.json()
-  } catch (err) {}
-  const saved = localStorage.getItem('inputProducts')
-  if (saved) {
-    try {
-      inputProducts.value = JSON.parse(saved)
-      filteredProducts.value = [...inputProducts.value] // Initialize filtered products
-    } catch {}
+    apiProducts.value = await fetchProducts()
+  } catch (err) {
+    console.error('Failed to fetch products:', err)
   }
+  
+  // Initialize filtered products
+  filteredProducts.value = [...inputProducts.value]
 })
 
-watch(inputProducts, (val) => {
-  localStorage.setItem('inputProducts', JSON.stringify(val))
-  // Update filtered products when input products change
+// Update filtered products when input products change
+watch(inputProducts, () => {
   handleSearch(searchQuery.value)
 }, { deep: true })
 
