@@ -10,11 +10,22 @@
       <h6 class="card-title text-truncate" :title="product.name">{{ formatTitle(product.name) }}</h6>
       <p class="card-text small text-truncate" :title="product.description">{{ product.description }}</p>
       <p class="card-text mb-1"><strong>Harga:</strong> Rp{{ product.price }}</p>
-      <p class="card-text mb-1"><strong>Stok:</strong> {{ product.stockStatus === 'habis' ? 'Stok Habis' : product.stock }}</p>
+      <p class="card-text mb-1">
+        <strong>Stok:</strong>
+        <span :class="{'text-danger': product.stockStatus === 'habis'}">
+          {{ product.stockStatus === 'habis' ? 'Stok Habis' : product.stock }}
+        </span>
+      </p>
       <div class="d-flex gap-2 mt-2">
-        <button class="btn btn-sm btn-warning" @click="$emit('edit', index)">📝</button>
-        <button class="btn btn-sm btn-danger" @click="$emit('delete', index)">🗑️</button>
-        <button class="btn btn-sm btn-info text-white" @click="$emit('detail', product)">ℹ️</button>
+        <button class="btn btn-sm btn-warning" @click="$emit('edit', index)">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button class="btn btn-sm btn-danger" @click="$emit('delete', index)">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+        <button class="btn btn-sm btn-info text-white" @click="$emit('detail', product)">
+          <i class="fas fa-info-circle"></i>
+        </button>
       </div>
     </div>
   </div>

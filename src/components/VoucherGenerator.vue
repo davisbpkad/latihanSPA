@@ -6,7 +6,13 @@
           <i class="text-primary"></i>
           Random Voucher Generator
         </h4>
-        
+
+         <!-- Success Message -->
+         <div v-if="showSuccess" class="alert alert-success mt-3" role="alert">
+          <i class="fas fa-check-circle me-2"></i>
+          Voucher code copied to clipboard!
+        </div>
+
         <!-- Voucher Display -->
         <div v-if="currentVoucher" class="voucher-display mb-4">
           <div class="voucher-code">
@@ -21,7 +27,7 @@
           </div>
           <div class="voucher-details mt-2">
             <span class="badge bg-success me-2">{{ currentVoucher.discount }}% OFF</span>
-            <span class="text-muted">{{ currentVoucher.description }}</span>
+            <span class="text-light fw-bold">{{ currentVoucher.description }}</span>
           </div>
         </div>
 
@@ -37,11 +43,6 @@
           </button>
         </div>
 
-        <!-- Success Message -->
-        <div v-if="showSuccess" class="alert alert-success mt-3" role="alert">
-          <i class="fas fa-check-circle me-2"></i>
-          Voucher code copied to clipboard!
-        </div>
       </div>
     </div>
   </div>
@@ -163,7 +164,7 @@ onMounted(() => {
 }
 
 .voucher-actions {
-  margin: 1.5rem 0;
+  margin: 1rem 0;
 }
 
 .btn-primary {

@@ -214,4 +214,12 @@ function getOriginalIndex(filteredIndex) {
 .container {
   margin-bottom: 100px;
 }
+
+@media (min-width: 992px) {
+  .sticky-form {
+    position: sticky;
+    top: 90px;
+    z-index: 10;
+  }
+}
 </style>
