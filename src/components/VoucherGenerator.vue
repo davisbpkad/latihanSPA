@@ -185,8 +185,6 @@ onMounted(() => {
   box-shadow: none;
 }
 
-
-
 .alert {
   border: none;
   border-radius: 8px;
@@ -214,7 +212,7 @@ onMounted(() => {
     font-size: 1.2rem;
     letter-spacing: 1px;
   }
-  
+
   .voucher-details {
     flex-direction: column;
     gap: 0.25rem;
