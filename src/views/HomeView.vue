@@ -1,15 +1,13 @@
 <template>
     <div class="container mt-4 pb-5">
-            <Carousel />
-            <Blogpost />
+        <Carousel />
+        <VoucherGenerator />
+        <Blogpost />
     </div>
 </template>
 
-<script>
+<script setup>
 import Carousel from '../components/Carousel.vue'
 import Blogpost from '../components/Blogpost.vue'
-export default {
-  name: 'HomeView',
-  components: { Carousel, Blogpost }
-}
+import VoucherGenerator from '../components/VoucherGenerator.vue'
 </script> 
