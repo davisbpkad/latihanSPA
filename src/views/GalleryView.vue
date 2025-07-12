@@ -1,6 +1,7 @@
 <template>
   <div class="nb-container gallery-spacing">
     <div class="nb-card">
+      <h2 class="nb-heading nb-heading-3">Gallery</h2>
       <div v-if="loading" class="text-center">
         <div class="spinner-border" role="status"></div>
         <p class="mt-2">Loading gallery...</p>
