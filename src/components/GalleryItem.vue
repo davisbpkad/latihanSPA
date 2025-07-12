@@ -66,7 +66,7 @@ export default {
 
 <style scoped>
 .nb-card.gallery-card {
-  background: #fff200;
+  background: var(--nb-white);
   border: 4px solid #111;
   border-radius: 12px;
   box-shadow: 8px 8px 0 #111;

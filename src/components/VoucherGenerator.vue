@@ -146,7 +146,7 @@ onMounted(() => {
 }
 
 .voucher-display {
-  background: #ffe600;
+  background: #fff59f;
   border: 3px solid #111;
   border-radius: 8px;
   padding: 1rem;
@@ -202,7 +202,7 @@ onMounted(() => {
 }
 
 .nb-btn-copy {
-  background: #ffe600;
+  background: #a5b4fb;
   color: #111;
   border: 3px solid #111;
   box-shadow: 2px 2px 0 #111;

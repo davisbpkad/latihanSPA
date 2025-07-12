@@ -1,17 +1,43 @@
 <template>
-  <div class="home-root">
-    <div class="home-section-inner">
-      <div class="home-carousel">
-        <Carousel />
+  <div class="home">
+    <div class="home-hero">
+      <div class="nb-container">
+        <div class="hero-content">
+          <h1 class="nb-heading nb-heading-1">Welcome to MyApps</h1>
+          <p class="nb-text nb-text-large">Discover amazing products and services with our neo-brutalism design</p>
+          <div class="hero-buttons">
+            <router-link to="/products" class="nb-button nb-button-primary">Explore Products</router-link>
+            <router-link to="/gallery" class="nb-button nb-button-secondary">View Gallery</router-link>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="home-section-inner">
-      <div class="home-voucher">
-        <VoucherGenerator />
+
+    <div class="home-sections">
+      <div class="nb-container">
+        <div class="section-grid">
+          <div class="section-item">
+            <div class="nb-card">
+              <h2 class="nb-heading nb-heading-3">Featured Carousel</h2>
+              <Carousel />
+            </div>
+          </div>
+          
+          <div class="section-item">
+            <div class="nb-card">
+              <h2 class="nb-heading nb-heading-3">Voucher Generator</h2>
+              <VoucherGenerator />
+            </div>
+          </div>
+        </div>
+        
+        <div class="blog-section">
+          <h2 class="nb-heading nb-heading-2 text-center">Latest Blog Posts</h2>
+          <div class="nb-grid nb-grid-3">
+            <Blogpost />
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="home-blog-grid">
-      <Blogpost />
     </div>
   </div>
 </template>
@@ -23,67 +49,88 @@ import VoucherGenerator from '../components/VoucherGenerator.vue'
 </script>
 
 <style scoped>
-.home-root {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem 3rem 1.5rem;
-  width: 100%;
-  box-sizing: border-box;
+.home {
+  min-height: 100vh;
 }
-.home-section-inner {
-  width: 100%;
-  box-sizing: border-box;
-  padding-left: 1rem;
-  padding-right: 1rem;
+
+.home-hero {
+  /* make home hero have space beetween navbar */
+  margin-top: 1rem;
+  background: var(--nb-primary);
+  border-bottom: var(--nb-border-lg);
+  box-shadow: var(--nb-shadow-lg);
+  padding: var(--nb-spacing-2xl) 0;
+  margin-bottom: var(--nb-spacing-2xl);
 }
-.home-carousel {
-  width: 100%;
-  margin-bottom: 2rem;
+
+.hero-content {
+  text-align: center;
+  color: var(--nb-white);
 }
-.home-voucher {
-  margin-bottom: 2.5rem;
-  width: 100%;
+
+.hero-content h1 {
+  color: var(--nb-white);
+  margin-bottom: var(--nb-spacing-lg);
 }
-.home-blog-grid {
+
+.hero-content p {
+  color: var(--nb-white);
+  margin-bottom: var(--nb-spacing-xl);
+  font-size: 1.25rem;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: var(--nb-spacing-md);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.home-sections {
+  padding-bottom: var(--nb-spacing-2xl);
+}
+
+.section-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: var(--nb-spacing-xl);
+  margin-bottom: var(--nb-spacing-2xl);
+}
+
+.section-item {
   width: 100%;
-  box-sizing: border-box;
 }
-.home-blog-grid > * {
-  grid-column: span 1;
+
+.blog-section {
+  margin-top: var(--nb-spacing-2xl);
 }
-@media (max-width: 1100px) {
-  .home-root {
-    max-width: 98vw;
-    padding: 1.2rem 0.5rem 2rem 0.5rem;
-  }
-  .home-section-inner {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-  }
-  .home-blog-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+
+.text-center {
+  text-align: center;
 }
-@media (max-width: 700px) {
-  .home-root {
-    padding: 0.7rem 0.1rem 1.2rem 0.1rem;
+
+@media (max-width: 768px) {
+  .home-hero {
+    padding: var(--nb-spacing-xl) 0;
+    margin-bottom: var(--nb-spacing-xl);
   }
-  .home-section-inner {
-    padding-left: 0.1rem;
-    padding-right: 0.1rem;
+  
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
   }
-  .home-blog-grid {
+  
+  .section-grid {
     grid-template-columns: 1fr;
-    gap: 1.2rem;
+    gap: var(--nb-spacing-lg);
   }
-  .home-carousel {
-    margin-bottom: 1.2rem;
+  
+  .hero-content h1 {
+    font-size: 2rem;
   }
-  .home-voucher {
-    margin-bottom: 1.5rem;
+  
+  .hero-content p {
+    font-size: 1.1rem;
   }
 }
 </style> 

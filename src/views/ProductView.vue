@@ -1,38 +1,45 @@
 <template>
-<div class="container mt-4 mb-5" style="margin-bottom: 100px;">
-  <!-- Product Input Form -->
-  <div class="nb-card nb-form mb-4">
-    <div class="nb-card-body">
-      <h5 class="nb-card-title mb-3">{{ isEditMode ? 'Edit Produk' : 'Tambah Produk' }}</h5>
-      <ProductForm
-        :form="form"
-        :apiProducts="apiProducts"
-        :isEditMode="isEditMode"
-        :selectedApiProduct="selectedApiProduct"
-        @submit="isEditMode ? handleUpdate() : handleSubmit()"
-        @cancel="resetForm"
-      />
-    </div>
-  </div>
+  <div class="product-view">
+    <div class="nb-container">
+      <!-- Page Header -->
+      <div class="page-header">
+        <h1 class="nb-heading nb-heading-1">Product Management</h1>
+        <p class="nb-text nb-text-large">Add, edit, and manage your products with our neo-brutalism interface</p>
+      </div>
 
-  <!-- Search Component -->
-  <ProductSearch 
-    :products="inputProducts" 
-    @search="handleSearch"
-  />
+      <!-- Product Input Form -->
+      <div class="nb-card form-section">
+        <h2 class="nb-heading nb-heading-3">{{ isEditMode ? 'Edit Product' : 'Add New Product' }}</h2>
+        <ProductForm
+          :form="form"
+          :apiProducts="apiProducts"
+          :isEditMode="isEditMode"
+          :selectedApiProduct="selectedApiProduct"
+          @submit="isEditMode ? handleUpdate() : handleSubmit()"
+          @cancel="resetForm"
+        />
+      </div>
 
-  <!-- Hasil Inputan Produk -->
-  <div v-if="filteredProducts.length" class="mb-4">
-    <div class="nb-card nb-card-list mb-3">
-      <div class="nb-card-body">
-        <h5 class="nb-card-title">
-          <i class="fas fa-box me-2"></i>
-          Produk yang Ditambahkan
-          <span v-if="searchQuery" class="nb-card-muted">(Hasil pencarian)</span>
-        </h5>
-        <div class="row">
-          <div v-for="(prod, idx) in filteredProducts" :key="idx" class="col-md-4 mb-3">
+      <!-- Search Component -->
+      <div class="search-section">
+        <ProductSearch 
+          :products="inputProducts" 
+          @search="handleSearch"
+        />
+      </div>
+
+      <!-- Product Results -->
+      <div v-if="filteredProducts.length" class="products-section">
+        <div class="nb-card">
+          <h2 class="nb-heading nb-heading-3">
+            <span class="icon"><i class="fas fa-box"></i></span>
+            Products Added
+            <span v-if="searchQuery" class="search-results">(Search Results)</span>
+          </h2>
+          <div class="nb-grid nb-grid-3">
             <ProductItem 
+              v-for="(prod, idx) in filteredProducts" 
+              :key="idx" 
               :product="prod" 
               :index="getOriginalIndex(idx)" 
               @edit="startEdit" 
@@ -42,38 +49,33 @@
           </div>
         </div>
       </div>
+
+      <!-- No products message -->
+      <div v-else-if="inputProducts.length === 0" class="nb-card empty-state">
+        <div class="empty-content">
+          <span class="empty-icon">📦</span>
+          <h3 class="nb-heading nb-heading-3">No Products Yet</h3>
+          <p class="nb-text">Add your first product to get started!</p>
+        </div>
+      </div>
+
+      <!-- No search results message -->
+      <div v-else-if="searchQuery && filteredProducts.length === 0" class="nb-card empty-state">
+        <div class="empty-content">
+          <span class="empty-icon">🔍</span>
+          <h3 class="nb-heading nb-heading-3">No Results Found</h3>
+          <p class="nb-text">No products match your search for "{{ searchQuery }}"</p>
+        </div>
+      </div>
+
+      <!-- Product Detail Modal -->
+      <ProductDetailModal 
+        :isVisible="isModalVisible" 
+        :product="selectedProduct" 
+        @close="closeModal" 
+      />
     </div>
   </div>
-
-  <!-- No products message -->
-  <div v-else-if="inputProducts.length === 0" class="nb-card nb-card-empty text-center py-5 mb-4">
-    <div class="nb-card-body">
-      <i class="fas fa-box-open fa-3x nb-card-muted mb-3"></i>
-      <h5 class="nb-card-title nb-card-muted">Belum ada produk</h5>
-      <p class="nb-card-muted">
-        Tambahkan produk pertama Anda!
-      </p>
-    </div>
-  </div>
-
-  <!-- No search results message -->
-  <div v-else-if="searchQuery && filteredProducts.length === 0" class="nb-card nb-card-empty text-center py-5 mb-4">
-    <div class="nb-card-body">
-      <i class="fas fa-search fa-3x nb-card-muted mb-3"></i>
-      <h5 class="nb-card-title nb-card-muted">Tidak ada hasil</h5>
-      <p class="nb-card-muted">Tidak ada produk yang cocok dengan pencarian "{{ searchQuery }}"</p>
-    </div>
-  </div>
-
-  <!-- Product Detail Modal -->
-  <ProductDetailModal 
-    :isVisible="isModalVisible" 
-    :product="selectedProduct" 
-    @close="closeModal" 
-  />
-</div>
-<div class="container">
-</div>
 </template>
 
 <script setup>
@@ -164,7 +166,7 @@ function handleUpdate() {
   if (!prod) return
   prod.name = selectedApiProduct.value.title
   prod.price = form.value.price
-  prod.stock = form.value.stock
+  prod.stock = prod.stock
   prod.stockStatus = form.value.stockStatus
   prod.image = selectedApiProduct.value.image
   prod.description = selectedApiProduct.value.description
@@ -221,50 +223,74 @@ function getOriginalIndex(filteredIndex) {
 </script>
 
 <style scoped>
-.container {
-  margin-bottom: 3.5rem;
+.product-view {
+  padding: 30px 0 var(--nb-spacing-xl) 0;
 }
-.nb-card {
-  background: #ffffff;
-  border: 4px solid #111;
-  border-radius: 12px;
-  box-shadow: 8px 8px 0 #111;
-  color: #111;
-  margin-bottom: 0.5rem;
+
+.page-header {
+  text-align: center;
+  margin-bottom: var(--nb-spacing-xl);
 }
-.nb-card-body {
-  padding: 2rem 1.5rem;
-  margin-bottom: 0.8rem;
+
+.page-header h1 {
+  margin-bottom: var(--nb-spacing-md);
 }
-.nb-card-title {
-  font-size: 1.3rem;
-  font-weight: 900;
-  text-transform: uppercase;
-  color: #111;
-  margin-bottom: 1rem;
-  letter-spacing: 1px;
+
+.form-section {
+  margin-bottom: var(--nb-spacing-xl);
 }
-.nb-card-muted {
-  color: #888 !important;
-  font-weight: 700;
+
+.search-section {
+  position: sticky;
+  top: 120px; /* ganti sesuai tinggi navbar jika perlu */
+  z-index: 10;
+  background: var(--nb-white);
+  margin-bottom: var(--nb-spacing-xl);
 }
-.nb-card-list {
-  margin-bottom: 2rem;
-  
+
+.products-section {
+  margin-bottom: var(--nb-spacing-xl);
 }
-.nb-card-empty {
-  background: #fff;
-  border: 4px dashed #111;
-  box-shadow: 4px 4px 0 #111;
-  color: #888;
-  border-radius: 12px;
+
+.icon {
+  font-size: 1.5rem;
+  margin-right: var(--nb-spacing-sm);
 }
-@media (max-width: 991px) {
-  .nb-card-body {
-    padding: 1.2rem 0.7rem;
+
+.search-results {
+  color: var(--nb-gray-600);
+  font-weight: var(--nb-font-weight-normal);
+  font-size: 1rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: var(--nb-spacing-2xl);
+}
+
+.empty-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--nb-spacing-md);
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: var(--nb-spacing-md);
+}
+
+@media (max-width: 768px) {
+  .product-view {
+    padding: var(--nb-spacing-lg) 0;
   }
-  .nb-card-title {
-    font-size: 1.05rem;
+  
+  .page-header h1 {
+    font-size: 2rem;
+  }
+  
+  .empty-icon {
+    font-size: 3rem;
   }
 }
 </style>

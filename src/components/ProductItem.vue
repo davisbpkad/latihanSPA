@@ -1,29 +1,32 @@
 <template>
-  <div class="nb-card product-card h-100">
-    <img
-      :src="product.image"
-      :alt="product.name"
-      class="nb-card-img-top mb-3 mt-3"
-      style="object-fit: contain; height: 120px; border: 3px solid #111; border-radius: 8px; box-shadow: 2px 2px 0 #111; background: #fff;"
-    />
-    <div class="nb-card-body p-2">
-      <h6 class="nb-card-title text-truncate" :title="product.name">{{ formatTitle(product.name) }}</h6>
-      <p class="nb-card-text small text-truncate" :title="product.description">{{ product.description }}</p>
-      <p class="nb-card-text mb-1"><strong>Harga:</strong> Rp{{ product.price }}</p>
-      <p class="nb-card-text mb-1">
-        <strong>Stok:</strong>
-        <span :class="{'text-danger': product.stockStatus === 'habis'}">
-          {{ product.stockStatus === 'habis' ? 'Stok Habis' : product.stock }}
-        </span>
-      </p>
-      <div class="d-flex gap-2 mt-2">
-        <button class="nb-btn nb-btn-warning" @click="$emit('edit', index)">
+  <div class="product-item">
+    <div class="product-image">
+      <img
+        :src="product.image"
+        :alt="product.name"
+        class="product-img"
+      />
+    </div>
+    <div class="product-content">
+      <h3 class="product-title" :title="product.name">{{ formatTitle(product.name) }}</h3>
+      <p class="product-description text-truncate" :title="product.description">{{ product.description }}</p>
+      <div class="product-details">
+        <p class="product-price"><strong>Price:</strong> Rp{{ product.price }}</p>
+        <p class="product-stock">
+          <strong>Stock:</strong>
+          <span :class="{'stock-empty': product.stockStatus === 'habis'}">
+            {{ product.stockStatus === 'habis' ? 'Out of Stock' : product.stock }}
+          </span>
+        </p>
+      </div>
+      <div class="product-actions">
+        <button class="nb-button nb-button-warning" @click="$emit('edit', index)">
           <i class="fas fa-edit"></i>
         </button>
-        <button class="nb-btn nb-btn-danger" @click="$emit('delete', index)">
-          <i class="fas fa-trash-alt"></i>
+        <button class="nb-button nb-button-error" @click="$emit('delete', index)">
+            <i class="fas fa-trash-alt"></i>
         </button>
-        <button class="nb-btn nb-btn-info text-white" @click="$emit('detail', product)">
+        <button class="nb-button nb-button-accent" @click="$emit('detail', product)">
           <i class="fas fa-info-circle"></i>
         </button>
       </div>
@@ -31,92 +34,143 @@
   </div>
 </template>
 
-<script>
-export default {
-    name: 'ProductItem',
-    props: {
-        product: {
-            type: Object,
-            required: true
-        },
-        index: {
-            type: Number,
-            required: true
-        }
-    },
-    methods: {
-      formatTitle(title) {
-        return title ? title.charAt(0).toUpperCase() + title.slice(1) : ''
-      }
-    }
+<script setup>
+defineProps({
+  product: {
+    type: Object,
+    required: true
+  },
+  index: {
+    type: Number,
+    required: true
+  }
+})
+
+function formatTitle(title) {
+  return title ? title.charAt(0).toUpperCase() + title.slice(1) : ''
 }
 </script>
 
 <style scoped>
-.nb-card.product-card {
-  background: #fff200;
-  border: 4px solid #111;
-  border-radius: 12px;
-  box-shadow: 8px 8px 0 #111;
-  color: #111;
-  max-width: 100%;
+.product-item {
+  background: var(--nb-white);
+  border: var(--nb-border-md);
+  border-radius: var(--nb-radius-md);
+  box-shadow: var(--nb-shadow-md);
+  overflow: hidden;
+  transition: var(--nb-transition-normal);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
-.nb-card-body {
-  padding: 1.2rem 1rem 1rem 1rem;
-}
-.nb-card-title {
-  font-size: 1.1rem;
-  font-weight: 900;
-  text-transform: uppercase;
-  color: #111;
-  margin-bottom: 0.3rem;
-}
-.nb-card-text {
-  font-size: 0.98rem;
-  font-weight: 600;
-  color: #111;
-  margin-bottom: 0.5rem;
-}
-.nb-btn {
-  font-weight: 900;
-  border: 3px solid #111;
-  box-shadow: 2px 2px 0 #111;
-  border-radius: 8px;
-  background: #fff;
-  color: #111;
-  padding: 0.4rem 1rem;
-  font-size: 1rem;
-  transition: all 0.1s;
-  cursor: pointer;
-}
-.nb-btn-warning {
-  background: #ffe600;
-  color: #111;
-  border: 3px solid #111;
-  box-shadow: 4px 4px 0 #111;
-}
-.nb-btn-danger {
-  background: #ff6b6b;
-  color: #fff;
-  border: 3px solid #111;
-  box-shadow: 4px 4px 0 #111;
-}
-.nb-btn-info {
-  background: #7cb6f8;
-  color: #111;
-  border: 3px solid #111;
-  box-shadow: 4px 4px 0 #111;
-}
-.nb-btn:hover {
+
+.product-item:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 #111;
+  box-shadow: var(--nb-shadow-lg);
 }
-@media (max-width: 700px) {
-  .nb-card-body {
-    padding: 0.7rem 0.5rem 0.5rem 0.5rem;
+
+.product-image {
+  padding: var(--nb-spacing-md);
+  background: var(--nb-gray-50);
+  border-bottom: var(--nb-border-sm);
+}
+
+.product-img {
+  width: 100%;
+  height: 120px;
+  object-fit: contain;
+  border: var(--nb-border-sm);
+  border-radius: var(--nb-radius-sm);
+  box-shadow: var(--nb-shadow-sm);
+  background: var(--nb-white);
+}
+
+.product-content {
+  padding: var(--nb-spacing-lg);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-title {
+  font-size: 1.1rem;
+  font-weight: var(--nb-font-weight-bold);
+  text-transform: uppercase;
+  color: var(--nb-black);
+  margin-bottom: var(--nb-spacing-sm);
+  line-height: 1.2;
+}
+
+.product-description {
+  font-size: 0.9rem;
+  font-weight: var(--nb-font-weight-medium);
+  color: var(--nb-gray-700);
+  margin-bottom: var(--nb-spacing-md);
+  line-height: 1.4;
+  flex: 1;
+  
+}
+
+.product-details {
+  margin-bottom: var(--nb-spacing-lg);
+}
+
+.product-price,
+.product-stock {
+  font-size: 0.95rem;
+  font-weight: var(--nb-font-weight-semibold);
+  color: var(--nb-black);
+  margin-bottom: var(--nb-spacing-xs);
+}
+
+.stock-empty {
+  color: var(--nb-error);
+  font-weight: var(--nb-font-weight-bold);
+}
+
+.product-actions {
+  display: flex;
+  gap: var(--nb-spacing-sm);
+  flex-wrap: wrap;
+}
+
+.nb-button {
+  flex: 1;
+  min-width: 80px;
+  font-size: 0.9rem;
+  padding: 10px var(--nb-spacing-sm);
+}
+
+.nb-button-warning {
+  background: var(--nb-warning);
+  color: var(--nb-black);
+}
+
+.nb-button-error {
+  background: var(--nb-error);
+  color: var(--nb-white);
+}
+
+.nb-button-accent {
+  background: var(--nb-accent);
+  color: var(--nb-white);
+}
+
+@media (max-width: 768px) {
+  .product-content {
+    padding: var(--nb-spacing-md);
   }
-  .nb-card-title {
-    font-size: 0.95rem;
+  
+  .product-title {
+    font-size: 1rem;
+  }
+  
+  .product-actions {
+    flex-direction: row;
+  }
+  
+  .nb-button {
+    width: 100%;
   }
 }
 </style>

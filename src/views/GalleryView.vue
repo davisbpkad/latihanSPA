@@ -1,26 +1,27 @@
 <template>
-  <div class="container mt-4 pb-5">
-    <div v-if="loading" class="text-center">
-      <div class="spinner-border" role="status"></div>
-      <p class="mt-2">Loading gallery...</p>
-    </div>
-    <div v-else-if="error" class="alert alert-danger" role="alert">
-      <h4>Error loading gallery</h4>
-      <p>{{ error }}</p>
-      <button class="btn btn-outline-danger" @click="reloadPage">
-        Try Again
-      </button>
-    </div>
-    <div v-else class="row">
-      <div v-if="gallerys.length === 0" class="col-12 text-center">
-        <p>No Gallery found.</p>
+  <div class="nb-container gallery-spacing">
+    <div class="nb-card">
+      <div v-if="loading" class="text-center">
+        <div class="spinner-border" role="status"></div>
+        <p class="mt-2">Loading gallery...</p>
       </div>
-      <GalleryItem
-        v-for="gallery in gallerys"
-        :key="gallery.id"
-        :gallery="gallery"
-        class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
-      />
+      <div v-else-if="error" class="alert alert-danger" role="alert">
+        <h4>Error loading gallery</h4>
+        <p>{{ error }}</p>
+        <button class="btn btn-outline-danger" @click="reloadPage">
+          Try Again
+        </button>
+      </div>
+      <div v-else class="gallery-grid">
+        <div v-if="gallerys.length === 0" class="text-center" style="grid-column: 1 / -1;">
+          <p>No Gallery found.</p>
+        </div>
+        <GalleryItem
+          v-for="gallery in gallerys"
+          :key="gallery.id"
+          :gallery="gallery"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -53,8 +54,35 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.container { max-width: 1200px; }
-.row { margin: 0 -8px; display: flex; flex-wrap: wrap; gap: 1.5rem; }
-.col-12, .col-sm-6, .col-md-4, .col-lg-3 { padding: 0 8px; }
+.nb-card { 
+  max-width: 1200px; 
+  background: #fff2e8; 
+}
+
+.gallery-spacing {
+  margin-top: var(--nb-spacing-xl);
+  margin-bottom: var(--nb-spacing-xl);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--nb-spacing-lg);
+}
+@media (max-width: 1200px) {
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 900px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+}
 .spinner-border { color: #7cb6f8; }
 </style>

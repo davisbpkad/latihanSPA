@@ -75,6 +75,7 @@ export default {
   border-radius: 12px;
   box-shadow: 8px 8px 0 #111;
   overflow: hidden;
+  
 }
 .carousel-inner {
   position: relative;
@@ -136,7 +137,7 @@ export default {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: #fff200;
+  background: #fff59f;
   border: 3px solid #111;
   color: #111;
   font-size: 2.5rem;

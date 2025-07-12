@@ -1,37 +1,57 @@
 @import './base.css';
 @import "tailwindcss";
 
-
+/* Neo-Brutalism App Styles */
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--nb-gray-50) 0%, var(--nb-white) 100%);
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+.app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
+/* Custom Tailwind Utilities for Neo-Brutalism */
+@layer utilities {
+  .nb-shadow-sm {
+    box-shadow: 2px 2px 0px 0px #000000;
   }
-}
-
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
+  
+  .nb-shadow-md {
+    box-shadow: 4px 4px 0px 0px #000000;
   }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+  
+  .nb-shadow-lg {
+    box-shadow: 6px 6px 0px 0px #000000;
+  }
+  
+  .nb-shadow-xl {
+    box-shadow: 8px 8px 0px 0px #000000;
+  }
+  
+  .nb-border-sm {
+    border: 2px solid #000000;
+  }
+  
+  .nb-border-md {
+    border: 3px solid #000000;
+  }
+  
+  .nb-border-lg {
+    border: 4px solid #000000;
+  }
+  
+  .nb-transform-hover {
+    transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+  
+  .nb-transform-hover:hover {
+    transform: translate(-2px, -2px);
+  }
+  
+  .nb-transform-active:active {
+    transform: translate(0, 0);
   }
 }

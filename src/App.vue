@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div id="app" class="app-root">
     <Navbar />
-    <main>
+    <main class="nb-container py-8">
       <router-view />
     </main>
     <Footer />
@@ -13,11 +13,10 @@ import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue'
 </script>
 
-<style>
-
-
+<style scoped>
 main {
-  padding-bottom: 2rem; /* Tambahan spacing sebelum footer */
+  flex: 1 0 auto;
+  min-height: 0;
 }
-
 </style>
+
