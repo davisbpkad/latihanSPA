@@ -14,7 +14,7 @@ export const API_ENDPOINTS = {
 // Default values
 export const DEFAULT_VALUES = {
   PRODUCT_LIMIT: 12,
-  GALLERY_IMAGE_COUNT: 9,
+  GALLERY_IMAGE_COUNT: 12,
   IMAGE_WIDTH: 400,
   IMAGE_HEIGHT: 300
 } 
