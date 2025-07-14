@@ -8,18 +8,24 @@
         <p v-else class="nb-text nb-text-large">Browse and view our product collection</p>
       </div>
 
-      <!-- Product Input Form - Admin Only -->
-      <div v-if="isAdmin" class="nb-card form-section">
-        <h2 class="nb-heading nb-heading-3">{{ isEditMode ? 'Edit Product' : 'Add New Product' }}</h2>
+      <!-- Add Product Button (Admin Only) -->
+      <div v-if="isAdmin" class="mb-6" style="margin-bottom:2rem;">
+        <button class="nb-button nb-button-primary" @click="openAddProduct">
+          <i class="fas fa-plus"></i> Tambah Produk
+        </button>
+      </div>
+
+      <!-- Sheet Product Form (Add/Edit) -->
+      <SheetProductForm :visible="showSheet" @close="closeSheet">
         <ProductForm
           :form="form"
           :apiProducts="apiProducts"
           :isEditMode="isEditMode"
           :selectedApiProduct="selectedApiProduct"
-          @submit="isEditMode ? handleUpdate() : handleSubmit()"
-          @cancel="resetForm"
+          @submit="isEditMode ? handleUpdate() : handleSubmit(); closeSheet()"
+          @cancel="closeSheet"
         />
-      </div>
+      </SheetProductForm>
 
       <!-- Search Component -->
       <div class="search-section">
@@ -43,7 +49,7 @@
               :key="idx" 
               :product="prod" 
               :index="getOriginalIndex(idx)" 
-              @edit="startEdit" 
+              @edit="openEditProduct(getOriginalIndex(idx))" 
               @delete="handleDelete" 
               @detail="showDetail" 
             />
@@ -93,6 +99,7 @@ import ProductDetailModal from '../components/ProductDetailModal.vue'
 import ProductForm from '../components/ProductForm.vue'
 import ProductSearch from '../components/ProductSearch.vue'
 import LoginModal from '../components/LoginModal.vue'
+import SheetProductForm from '../components/SheetProductForm.vue'
 import { fetchProducts } from '../utils/api.js'
 import { useLocalStorage } from '../composables/useLocalStorage.js'
 import { useAuth } from '../composables/useAuth.js'
@@ -113,6 +120,7 @@ const editIndex = ref(null)
 const isModalVisible = ref(false)
 const selectedProduct = ref(null)
 const showLogin = ref(false)
+const showSheet = ref(false)
 
 // Auth management
 const { isAdmin } = useAuth()
@@ -211,6 +219,19 @@ function showDetail(product) {
 function closeModal() {
   isModalVisible.value = false
   selectedProduct.value = null
+}
+
+function openAddProduct() {
+  resetForm()
+  isEditMode.value = false
+  showSheet.value = true
+}
+function openEditProduct(index) {
+  startEdit(index)
+  showSheet.value = true
+}
+function closeSheet() {
+  showSheet.value = false
 }
 
 // Search functionality
