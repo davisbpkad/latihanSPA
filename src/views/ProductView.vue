@@ -40,7 +40,7 @@
         <div class="nb-card">
           <h2 class="nb-heading nb-heading-3">
             <span class="icon"><i class="fas fa-box"></i></span>
-            Products Added
+            List Products
             <span v-if="searchQuery" class="search-results">(Search Results)</span>
           </h2>
           <div class="nb-grid nb-grid-3">
