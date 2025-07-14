@@ -59,7 +59,7 @@ export default {
   z-index: 1050;
 }
 .nb-modal-content {
-  background: #fff200;
+  background: #fff59f;
   border: 4px solid #111;
   border-radius: 12px;
   box-shadow: 8px 8px 0 #111;
