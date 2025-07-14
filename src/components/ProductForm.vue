@@ -24,7 +24,7 @@
       </div>
     <div class="form-block" v-if="selectedApiProduct">
       <img :src="selectedApiProduct.image" class="nb-img-neo" style="max-height:80px;object-fit:contain;" />
-      <div class="nb-desc-neo">{{ selectedApiProduct.description }}</div>
+      <div class="nb-desc-neo line-clamp-3">{{ selectedApiProduct.description }}</div>
     </div>
     <div class="form-actions-neo">
       <button type="submit" class="nb-btn-neo nb-btn-primary-neo me-2">

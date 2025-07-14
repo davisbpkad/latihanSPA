@@ -18,16 +18,17 @@ const props = defineProps({ message: String, type: String, visible: Boolean })
   top: 2rem;
   right: 2rem;
   z-index: 99999;
-  min-width: 220px;
-  padding: 1rem 1.5rem;
-  border-radius: 12px;
+  min-width: 180px;
+  max-width: 90vw;
+  padding: 0.7rem 1.1rem;
+  border-radius: 10px;
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 1rem;
   box-shadow: 4px 4px 0 #111;
   border: 3px solid #111;
   display: flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 0.6rem;
   background: #fff2e8;
   color: #111;
 }
@@ -43,4 +44,18 @@ const props = defineProps({ message: String, type: String, visible: Boolean })
 }
 .toast-fade-enter-active, .toast-fade-leave-active { transition: opacity 0.3s; }
 .toast-fade-enter, .toast-fade-leave-to { opacity: 0; }
+
+@media (max-width: 600px) {
+  .toast {
+    top: 1rem;
+    right: 0.5rem;
+    left: 0.5rem;
+    min-width: unset;
+    max-width: 95vw;
+    padding: 0.5rem 0.7rem;
+    font-size: 0.92rem;
+    border-radius: 7px;
+    box-shadow: 2px 2px 0 #111;
+  }
+}
 </style> 

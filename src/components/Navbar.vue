@@ -4,7 +4,7 @@
       <div class="navbar-content">
         <router-link
           class="navbar-brand"
-          :class="{ 'navbar-brand-admin': isAuthenticated && currentUser?.role === 'admin' }"
+          :class="{ 'navbar-brand-admin': isMobile || (isAuthenticated && currentUser?.role === 'admin') }"
           to="/"
         >
           {{ isAuthenticated && currentUser?.role === 'admin' ? 'LB' : 'LUPABAPAK' }}
@@ -57,7 +57,7 @@
 </template>
 
 <script setup>
-import { ref, inject } from 'vue'
+import { ref, onMounted, onUnmounted, inject } from 'vue'
 import { useAuth } from '../composables/useAuth.js'
 import LoginModal from './LoginModal.vue'
 
@@ -65,6 +65,18 @@ const isNavbarOpen = ref(false)
 const showLogin = ref(false)
 const { isAuthenticated, currentUser, logout } = useAuth()
 const showToast = inject('showToast')
+
+const isMobile = ref(false)
+function handleResize() {
+  isMobile.value = window.innerWidth <= 768
+}
+onMounted(() => {
+  handleResize()
+  window.addEventListener('resize', handleResize)
+})
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize)
+})
 
 const navItems = [
   { label: 'Home', to: '/' },
@@ -129,7 +141,9 @@ function handleLoginSuccess() {
   transition: margin-bottom 0.2s;
 }
 .navbar-brand-admin {
-  margin-bottom: 1.5rem; /* Atur sesuai kebutuhan, misal 1.5rem */
+  font-size: 1.2rem;
+  padding: var(--nb-spacing-xs) var(--nb-spacing-md);
+  transition: font-size 0.2s, padding 0.2s;
 }
 
 .navbar-brand:hover {
@@ -361,6 +375,11 @@ function handleLoginSuccess() {
 
   .nav-link:active {
     transform: scale(0.98);
+  }
+
+  .navbar-brand {
+    font-size: 1.2rem;
+    padding: var(--nb-spacing-xs) var(--nb-spacing-md);
   }
 
   /* Touch-specific styles untuk perangkat mobile */
