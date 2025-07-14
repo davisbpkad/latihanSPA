@@ -2,7 +2,13 @@
   <nav class="navbar">
     <div class="nb-container">
       <div class="navbar-content">
-        <router-link class="navbar-brand" to="/">LupaBapak</router-link>
+        <router-link
+          class="navbar-brand"
+          :class="{ 'navbar-brand-admin': isAuthenticated && currentUser?.role === 'admin' }"
+          to="/"
+        >
+          {{ isAuthenticated && currentUser?.role === 'admin' ? 'LB' : 'LUPABAPAK' }}
+        </router-link>
         <!-- Toggle button -->
         <button
           class="navbar-toggler"
@@ -29,7 +35,7 @@
           <div class="auth-section">
             <div v-if="isAuthenticated" class="user-info">
               <span class="user-greeting">Hi, {{ currentUser?.username }}!</span>
-              <button class="nb-button nb-button-secondary logout-btn" @click="handleLogout">
+              <button class="nb-button nb-button-primary logout-btn" @click="handleLogout">
                 Logout
               </button>
             </div>
@@ -117,6 +123,11 @@ function handleLoginSuccess() {
   padding: var(--nb-spacing-sm) var(--nb-spacing-lg);
   text-decoration: none;
   transition: var(--nb-transition-fast);
+  margin-bottom: 0;
+  transition: margin-bottom 0.2s;
+}
+.navbar-brand-admin {
+  margin-bottom: 1.5rem; /* Atur sesuai kebutuhan, misal 1.5rem */
 }
 
 .navbar-brand:hover {
