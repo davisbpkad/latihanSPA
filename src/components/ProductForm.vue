@@ -3,25 +3,25 @@
     <div class="form-block">
       <label class="nb-label-neo">Pilih Produk dari API</label>
       <select v-model="form.selectedApiId" class="nb-input-neo" required :disabled="isEditMode">
-        <option disabled value="">Pilih Produk</option>
-        <option v-for="item in apiProducts" :key="item.id" :value="item.id">{{ item.title }}</option>
-      </select>
-    </div>
+          <option disabled value="">Pilih Produk</option>
+          <option v-for="item in apiProducts" :key="item.id" :value="item.id">{{ item.title }}</option>
+        </select>
+      </div>
     <div class="form-block">
       <label class="nb-label-neo">Harga</label>
       <input v-model.number="form.price" type="number" class="nb-input-neo" min="1" required />
-    </div>
+      </div>
     <div class="form-block">
       <label class="nb-label-neo">Status Stok</label>
       <select v-model="form.stockStatus" class="nb-input-neo" required>
-        <option value="ada">Stok Ada</option>
-        <option value="habis">Stok Habis</option>
-      </select>
-    </div>
+          <option value="ada">Stok Ada</option>
+          <option value="habis">Stok Habis</option>
+        </select>
+      </div>
     <div class="form-block">
       <label class="nb-label-neo">Stok</label>
       <input v-model.number="form.stock" type="number" class="nb-input-neo" :disabled="form.stockStatus === 'habis'" :min="form.stockStatus === 'habis' ? 0 : 1" :value="form.stockStatus === 'habis' ? 0 : form.stock" required />
-    </div>
+      </div>
     <div class="form-block" v-if="selectedApiProduct">
       <img :src="selectedApiProduct.image" class="nb-img-neo" style="max-height:80px;object-fit:contain;" />
       <div class="nb-desc-neo">{{ selectedApiProduct.description }}</div>

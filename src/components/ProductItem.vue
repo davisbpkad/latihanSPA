@@ -11,9 +11,9 @@
       <h3 class="product-title" :title="product.name">{{ formatTitle(product.name) }}</h3>
       <p class="product-description text-truncate" :title="product.description">{{ product.description }}</p>
       <div class="product-details">
-        <p class="product-price"><strong>Price:</strong> Rp{{ product.price }}</p>
+        <p class="product-price"><strong>Price: </strong> Rp{{ product.price }}</p>
         <p class="product-stock">
-          <strong>Stock:</strong>
+          <strong>Stock: </strong>
           <span :class="{'stock-empty': product.stockStatus === 'habis'}">
             {{ product.stockStatus === 'habis' ? 'Out of Stock' : product.stock }}
           </span>
