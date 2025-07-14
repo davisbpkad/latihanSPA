@@ -26,7 +26,7 @@ function onClose() { emit('close') }
   background: #fff2e8;
   border-left: 4px solid #111;
   box-shadow: -8px 0 0 #111;
-  width: 420px; max-width: 100vw;
+  width: 800px; max-width: 100vw;
   height: 100vh; position: relative;
   padding: 2rem 1.5rem;
   display: flex; flex-direction: column;
