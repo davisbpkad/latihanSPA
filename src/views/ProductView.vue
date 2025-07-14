@@ -184,14 +184,15 @@ function startEdit(index) {
 function handleUpdate() {
   if (editIndex.value === null || !selectedApiProduct.value) return
   if (form.value.price < 1) return
-  const prod = inputProducts.value[editIndex.value]
-  if (!prod) return
-  prod.name = selectedApiProduct.value.title
-  prod.price = form.value.price
-  prod.stock = prod.stock
-  prod.stockStatus = form.value.stockStatus
-  prod.image = selectedApiProduct.value.image
-  prod.description = selectedApiProduct.value.description
+  // Buat objek baru agar reactivity pasti terpicu
+  inputProducts.value.splice(editIndex.value, 1, {
+    name: selectedApiProduct.value.title,
+    price: form.value.price,
+    stock: form.value.stock,
+    stockStatus: form.value.stockStatus,
+    image: selectedApiProduct.value.image,
+    description: selectedApiProduct.value.description
+  })
   resetForm()
 }
 
