@@ -3,12 +3,13 @@
     <div class="nb-container">
       <!-- Page Header -->
       <div class="page-header">
-        <h1 class="nb-heading nb-heading-1">Product Management</h1>
-        <p class="nb-text nb-text-large">Add, edit, and manage your products with our neo-brutalism interface</p>
+        <h1 class="nb-heading nb-heading-1">Product</h1>
+        <p v-if="isAdmin" class="nb-text nb-text-large">Add, edit, and manage your products with our neo-brutalism interface</p>
+        <p v-else class="nb-text nb-text-large">Browse and view our product collection</p>
       </div>
 
-      <!-- Product Input Form -->
-      <div class="nb-card form-section">
+      <!-- Product Input Form - Admin Only -->
+      <div v-if="isAdmin" class="nb-card form-section">
         <h2 class="nb-heading nb-heading-3">{{ isEditMode ? 'Edit Product' : 'Add New Product' }}</h2>
         <ProductForm
           :form="form"
@@ -74,6 +75,13 @@
         :product="selectedProduct" 
         @close="closeModal" 
       />
+
+      <!-- Login Modal -->
+      <LoginModal 
+        :isVisible="showLogin" 
+        @close="showLogin = false"
+        @success="handleLoginSuccess"
+      />
     </div>
   </div>
 </template>
@@ -84,8 +92,10 @@ import ProductItem from '../components/ProductItem.vue'
 import ProductDetailModal from '../components/ProductDetailModal.vue'
 import ProductForm from '../components/ProductForm.vue'
 import ProductSearch from '../components/ProductSearch.vue'
+import LoginModal from '../components/LoginModal.vue'
 import { fetchProducts } from '../utils/api.js'
 import { useLocalStorage } from '../composables/useLocalStorage.js'
+import { useAuth } from '../composables/useAuth.js'
 
 // State management
 const apiProducts = ref([])
@@ -102,6 +112,10 @@ const isEditMode = ref(false)
 const editIndex = ref(null)
 const isModalVisible = ref(false)
 const selectedProduct = ref(null)
+const showLogin = ref(false)
+
+// Auth management
+const { isAdmin } = useAuth()
 
 onMounted(async () => {
   try {
@@ -220,6 +234,15 @@ function getOriginalIndex(filteredIndex) {
     product.price === filteredProduct.price
   )
 }
+
+// Login modal functions
+function showLoginModal() {
+  showLogin.value = true
+}
+
+function handleLoginSuccess() {
+  showLogin.value = false
+}
 </script>
 
 <style scoped>
@@ -247,6 +270,8 @@ function getOriginalIndex(filteredIndex) {
   background: var(--nb-white);
   margin-bottom: var(--nb-spacing-xl);
 }
+
+
 
 .products-section {
   margin-bottom: var(--nb-spacing-xl);

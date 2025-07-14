@@ -20,10 +20,10 @@
         </p>
       </div>
       <div class="product-actions">
-        <button class="nb-button nb-button-warning" @click="$emit('edit', index)">
+        <button v-if="isAdmin" class="nb-button nb-button-warning" @click="$emit('edit', index)">
           <i class="fas fa-edit"></i>
         </button>
-        <button class="nb-button nb-button-error" @click="$emit('delete', index)">
+        <button v-if="isAdmin" class="nb-button nb-button-error" @click="$emit('delete', index)">
             <i class="fas fa-trash-alt"></i>
         </button>
         <button class="nb-button nb-button-accent" @click="$emit('detail', product)">
@@ -35,6 +35,10 @@
 </template>
 
 <script setup>
+import { useAuth } from '../composables/useAuth.js'
+
+const { isAdmin } = useAuth()
+
 defineProps({
   product: {
     type: Object,

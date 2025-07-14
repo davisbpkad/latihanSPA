@@ -2,7 +2,7 @@
   <nav class="navbar">
     <div class="nb-container">
       <div class="navbar-content">
-        <router-link class="navbar-brand" to="/">MyApps</router-link>
+        <router-link class="navbar-brand" to="/">LupaBapak</router-link>
         <!-- Toggle button -->
         <button
           class="navbar-toggler"
@@ -26,16 +26,39 @@
               <router-link class="nav-link" :to="item.to">{{ item.label }}</router-link>
             </li>
           </ul>
+          <div class="auth-section">
+            <div v-if="isAuthenticated" class="user-info">
+              <span class="user-greeting">Hi, {{ currentUser?.username }}!</span>
+              <button class="nb-button nb-button-secondary logout-btn" @click="handleLogout">
+                Logout
+              </button>
+            </div>
+            <button v-else class="nb-button nb-button-primary login-btn" @click="showLoginModal">
+              Login
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </nav>
+  
+  <!-- Login Modal -->
+  <LoginModal 
+    :isVisible="showLogin" 
+    @close="showLogin = false"
+    @success="handleLoginSuccess"
+  />
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import { useAuth } from '../composables/useAuth.js'
+import LoginModal from './LoginModal.vue'
 
 const isNavbarOpen = ref(false)
+const showLogin = ref(false)
+const { isAuthenticated, currentUser, logout } = useAuth()
+
 const navItems = [
   { label: 'Home', to: '/' },
   { label: 'Product', to: '/products' },
@@ -46,6 +69,20 @@ const navItems = [
 
 function toggleNavbar() {
   isNavbarOpen.value = !isNavbarOpen.value
+}
+
+function showLoginModal() {
+  showLogin.value = true
+  isNavbarOpen.value = false
+}
+
+function handleLogout() {
+  logout()
+  isNavbarOpen.value = false
+}
+
+function handleLoginSuccess() {
+  showLogin.value = false
 }
 </script>
 
@@ -101,6 +138,31 @@ function toggleNavbar() {
   margin: 0;
   padding: 0;
   gap: var(--nb-spacing-md);
+}
+
+.auth-section {
+  display: flex;
+  align-items: center;
+  margin-left: var(--nb-spacing-lg);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: var(--nb-spacing-md);
+}
+
+.user-greeting {
+  font-weight: var(--nb-font-weight-semibold);
+  color: var(--nb-black);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.login-btn,
+.logout-btn {
+  font-size: 0.9rem;
+  padding: var(--nb-spacing-sm) var(--nb-spacing-md);
 }
 
 .nav-link {
@@ -213,6 +275,7 @@ function toggleNavbar() {
     display: none;
     width: 100%;
     margin-top: var(--nb-spacing-md);
+    flex-direction: column;
   }
   
   .navbar-menu-open {
@@ -248,8 +311,32 @@ function toggleNavbar() {
   .nav-link:active {
     background: var(--nb-success);
     color: var(--nb-black);
-    transform: scale(1.02);
-    box-shadow: var(--nb-shadow-lg);
+  }
+  
+  .auth-section {
+    margin-top: var(--nb-spacing-md);
+    padding-top: var(--nb-spacing-md);
+    border-top: var(--nb-border-sm);
+    margin-left: 0;
+    justify-content: center;
+  }
+  
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nb-spacing-sm);
+    align-items: center;
+  }
+  
+  .user-greeting {
+    font-weight: var(--nb-font-weight-semibold);
+    color: var(--nb-black);
+  }
+  
+  .login-btn,
+  .logout-btn {
+    width: 100%;
+    justify-content: center;
   }
 
   .nav-link.router-link-exact-active {
