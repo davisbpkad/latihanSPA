@@ -72,7 +72,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, inject } from 'vue'
 import { useAuth } from '../composables/useAuth.js'
 
 const props = defineProps({
@@ -85,6 +85,7 @@ const props = defineProps({
 const emit = defineEmits(['close', 'success'])
 
 const { login, isLoading, error, clearError } = useAuth()
+const showToast = inject('showToast')
 
 const form = ref({
   username: '',
@@ -103,8 +104,11 @@ async function handleSubmit() {
   const result = await login(form.value.username, form.value.password)
   
   if (result.success) {
+    showToast && showToast('Login berhasil!', 'success')
     emit('success')
     emit('close')
+  } else if (result.error) {
+    showToast && showToast('Login gagal: ' + result.error, 'error')
   }
 }
 

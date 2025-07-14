@@ -57,13 +57,14 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { useAuth } from '../composables/useAuth.js'
 import LoginModal from './LoginModal.vue'
 
 const isNavbarOpen = ref(false)
 const showLogin = ref(false)
 const { isAuthenticated, currentUser, logout } = useAuth()
+const showToast = inject('showToast')
 
 const navItems = [
   { label: 'Home', to: '/' },
@@ -85,6 +86,7 @@ function showLoginModal() {
 function handleLogout() {
   logout()
   isNavbarOpen.value = false
+  showToast && showToast('Logout berhasil!', 'success')
 }
 
 function handleLoginSuccess() {

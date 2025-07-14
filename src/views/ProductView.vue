@@ -50,7 +50,7 @@
               :product="prod" 
               :index="getOriginalIndex(idx)" 
               @edit="openEditProduct(getOriginalIndex(idx))" 
-              @delete="handleDelete" 
+              @delete="confirmDelete(getOriginalIndex(idx))" 
               @detail="showDetail" 
             />
           </div>
@@ -88,6 +88,13 @@
         @close="showLogin = false"
         @success="handleLoginSuccess"
       />
+
+      <!-- Confirm Dialog -->
+      <ConfirmDialog
+        :visible="showConfirmDialog"
+        @confirm="handleDeleteConfirmed"
+        @cancel="handleDeleteCancelled"
+      />
     </div>
   </div>
 </template>
@@ -100,6 +107,7 @@ import ProductForm from '../components/ProductForm.vue'
 import ProductSearch from '../components/ProductSearch.vue'
 import LoginModal from '../components/LoginModal.vue'
 import SheetProductForm from '../components/SheetProductForm.vue'
+import ConfirmDialog from '../components/ConfirmDialog.vue'
 import { fetchProducts } from '../utils/api.js'
 import { useLocalStorage } from '../composables/useLocalStorage.js'
 import { useAuth } from '../composables/useAuth.js'
@@ -121,6 +129,8 @@ const isModalVisible = ref(false)
 const selectedProduct = ref(null)
 const showLogin = ref(false)
 const showSheet = ref(false)
+const showConfirmDialog = ref(false)
+const deleteIndex = ref(null)
 
 // Auth management
 const { isAdmin } = useAuth()
@@ -199,6 +209,20 @@ function handleUpdate() {
 function handleDelete(index) {
   inputProducts.value.splice(index, 1)
   resetForm()
+}
+
+function confirmDelete(index) {
+  showConfirmDialog.value = true
+  deleteIndex.value = index
+}
+function handleDeleteConfirmed() {
+  handleDelete(deleteIndex.value)
+  showConfirmDialog.value = false
+  deleteIndex.value = null
+}
+function handleDeleteCancelled() {
+  showConfirmDialog.value = false
+  deleteIndex.value = null
 }
 
 function resetForm() {
