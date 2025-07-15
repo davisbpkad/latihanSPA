@@ -86,9 +86,67 @@ function updateFilteredCount() {
   color: #111;
   padding: 1.2rem 1rem;
   margin-bottom: 2rem;
-  position: sticky;
-  top: 80px;
-  z-index: 1000;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .search-container.nb-card {
+    padding: 0.8rem 0.6rem;
+    margin-bottom: 1rem;
+    border-width: 2px;
+    border-radius: 8px;
+    box-shadow: 4px 4px 0 #111;
+  }
+  
+  .nb-card-title {
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .nb-input.nb-search-input {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+    border-width: 2px;
+    box-shadow: 1px 1px 0 #111;
+  }
+  
+  .nb-btn {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+    border-width: 2px;
+    box-shadow: 1px 1px 0 #111;
+  }
+  
+  .nb-btn-secondary {
+    box-shadow: 2px 2px 0 #111;
+  }
+  
+  .nb-btn:hover {
+    box-shadow: 3px 3px 0 #111;
+  }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+  .search-container.nb-card {
+    padding: 0.6rem 0.5rem;
+    border-width: 2px;
+    box-shadow: 4px 4px 0 #111;
+  }
+  
+  .nb-card-title {
+    font-size: 0.8rem;
+  }
+  
+  .nb-input.nb-search-input {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.6rem;
+  }
+  
+  .nb-btn {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.6rem;
+  }
 }
 .nb-card-body {
   padding: 0;

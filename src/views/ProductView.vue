@@ -311,10 +311,26 @@ function handleLoginSuccess() {
 
 .search-section {
   position: sticky;
-  top: 120px; /* ganti sesuai tinggi navbar jika perlu */
-  z-index: 10;
+  top: 110px;
+  z-index: 1000;
   background: var(--nb-white);
   margin-bottom: var(--nb-spacing-xl);
+}
+
+/* Mobile responsive styles untuk search section */
+@media (max-width: 768px) {
+  .search-section {
+    top:100px;
+    margin-top: 0.5rem;
+  }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+  .search-section {
+    top: 90px;
+    margin-top: 0.3rem;
+  }
 }
 
 
